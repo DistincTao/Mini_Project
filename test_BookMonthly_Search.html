@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<title>API 연습</title>
+	</head>
+	<body>
+		<h1>이달의 추천도서 TEST</h1>
+		<script>
+			let books = null;
+			$(function () {
+				transData();
+			});
+			// let search = '';
+			// $('.search').on('click', '#btn', function (e) {
+			// 	search = $('input').val();
+			// 	console.log(search);
+			// });
+
+			function transData(xml) {
+				$.ajax({
+					url: 'http://api.kcisa.kr/openapi/service/rest/meta13/getKPEF0101?serviceKey=a236b958-53f7-4b01-8ae6-d6862d54a0d7&numOfRows=10&pageNo=1',
+					method: 'GET',
+					datatype: 'xml',
+				}).done(function (data) {
+					// console.log(data);
+					parsingData(data);
+					// }
+				});
+			}
+			function parsingData(xml) {
+				books = xml.getElementsByTagName('item');
+				let title = '';
+				let description = '';
+				let auther = '';
+				let imgLink = '';
+				let link = '';
+				$.each(books, function (index, book) {
+					title = $(book).children().eq(0).text();
+					description = $(book).children().eq(8).text();
+					auther = $(book).children().eq(15).text();
+					imgLink = $(book).children().eq(14).text();
+					link = $(book).children().eq(17).text();
+					// console.log(title, description, auther, imgLink, link);
+				});
+				console.log(xml);
+				console.log(books);
+			}
+		</script>
+	</body>
+</html>
