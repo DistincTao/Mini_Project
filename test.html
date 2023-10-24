@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="js/jquery-3.7.1.min.js"></script>
+		<title>API 연습</title>
+	</head>
+	<body>
+		<h1>KaKao API TEST</h1>
+		<div class="search">
+			<input type="text" name="serach" />
+			<button id="btn" type="submit">검색</button>
+		</div>
+		<div class="container">
+			<ul>
+				<li class="thumbnail"></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+		<script>
+			let search = '';
+			$('#inputTitle').onchange(function (e) {
+				search = $('input').val();
+				searchBooks(search);
+			});
+
+			function searchBooks(input) {
+				$.ajax({
+					method: 'GET',
+					url: 'https://dapi.kakao.com/v3/search/book?target=title&',
+					data: {
+						query: input,
+					},
+					headers: {
+						Authorization: 'KakaoAK 0f7acd5ca96b1d76578d02adc4161263',
+					},
+				}).done(function (data) {
+					parsingData(data);
+				});
+				let output = '';
+				function parsingData(json) {
+					$(json).each(function (index, item) {
+						output += `<ul class="searchBook-result">
+						<li id="thumbnail"><img src="${json.documents[index].thumbnail}"/></li>
+						<li>${data.documents[index].title}</li>
+						<li>${data.documents[index].contents}</li>
+					</ul> -->`;
+
+						// $('li')[1].append(data.documents[0].title);
+						// $('li')[2].append(data.documents[0].contents);
+						// $('.thumbnail').append('<img src="' + data.documents[0].thumbnail + '"/>');
+						// $('.thumbnail').children().css('width', '300px');
+					});
+					console.log(data);
+					$('.searchBook').append(output);
+				}
+			}
+		</script>
+	</body>
+</html>
