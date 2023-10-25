@@ -58,7 +58,7 @@ $(function () {
 			pageNo--;
 			search = $('input').val();
 			searchBooks(search, pageNo, numOfRows);
-		} else if (pageNo == 1) {
+		} else if (pageNo == 0) {
 			$(this).attr('disabled', true);
 		}
 	});
@@ -89,21 +89,29 @@ function parsingMontylyBookData(xml) {
 	let auther = '';
 	let imgLink = '';
 	let link = '';
-	let output = '';
+	let output = '<div class="row gy-4">';
 	$.each(books, function (index, book) {
 		title = $(book).children().eq(0).text();
 		description = $(book).children().eq(8).text();
 		auther = $(book).children().eq(15).text();
 		imgLink = $(book).children().eq(14).text().replaceAll('www', 'e');
 		link = $(book).children().eq(17).text();
-		console.log(title, description, auther, imgLink, link);
-		console.log(imgLink);
-		output += `<div class="monthlyBook-cnt">`;
-		output += `<div><img src="${imgLink}" alt="사진" class="monthlyBook-thumbNail" width="120px" height="172px"/></div>
-							<div class="monthlyBook-title">${title}</div>
-							<div class="monthlyBook-title">${auther}</div>
-						</div>`;
+		
+		// console.log(title, description, auther, imgLink, link);
+		// console.log(imgLink);
+		output += `<div class="col-xl-4 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100"><article>
+							<div class="post-img"><img src="${imgLink}" class="img-fluid" width="240px" height="340px">
+			</div>`;
+		output += `<h2 class="title"><a href="#">${title}</a></h2>
+								<div class="d-flex align-items-center">
+								<div class="post-meta">
+								<p class="post-author">${auther}</p>
+								</div>
+								</div>
+								</article>
+								</div>`;
 	});
+	output += `</div>`
 	// console.log(xml);
 	// console.log(books);
 	$('.monthlyBook').html(output);
@@ -169,7 +177,7 @@ let lon = '';
 
 // 세부 자료 분석 및 출력
 function parsingLibData(json) {
-	output = '';
+	output = '<div class="faq-container">';
 	$.each(json, function (index, item) {
 		district = json[index].CODE_VALUE;
 		libraryName = json[index].LBRRY_NAME;
@@ -184,10 +192,12 @@ function parsingLibData(json) {
 		// list 출력하기
 		if ($('#district').val() == district) {
 			console.log(district, libraryName);
-			output += `<div><a href="${homePage}"/>${libraryName}</a></div>`;
+				output += `<div class="faq-item"><h3><span>${libraryName}</span></h3><div class="faq-content">`
+				output += `<p>주 소 : ${libraryAddr} / 전화번호 : ${libraryTel}</p><p>운영시간 : ${operation} / ${holiday}</p>`
+				output += `<i class="faq-toggle bi bi-chevron-right"></i></div>`
 		}
 	});
-
+	output += `</div>`
 	$('.contents').html(output);
 
 	// kakao Map API로 지도를 그리기
