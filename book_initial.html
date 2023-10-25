@@ -64,13 +64,13 @@
 					<div class="sidebar-item search-form">
 						<h3 class="sidebar-title">도서 검색</h3>
 							<input type="text" placeholder="찾고 싶은 책이 있으신가요?" id="searchInput">
+							<select name="listCnt" id="listCnt">
+								<option value="10">10개씩 보기</option>
+								<option value="20">20개씩 보기</option>
+								<option value="50">50개씩 보기</option>
+							</select>
 							<button type="submit" id="btn"><i class="bi bi-search"></i></button>
 					</div>
-					<select name="listCnt" id="listCnt">
-						<option value="10">10개씩 보기</option>
-						<option value="20">20개씩 보기</option>
-						<option value="50">50개씩 보기</option>
-					</select>
 				</div>
 				<div class="searchResult"></div>
 				<button type="button" class="btn btn-danger" id="prevPage"><이전</button>
