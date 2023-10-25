@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,27 +9,58 @@
 	<body>
 		<h1>KaKao API TEST</h1>
 		<div class="search">
-			<input type="text" name="serach" />
+			<input type="text" name="serach" id="searchInput" />
 			<button id="btn" type="submit">검색</button>
+			<select name="listCnt" id="listCnt">
+				<option value="10">10개씩 보기</option>
+				<option value="20">20개씩 보기</option>
+				<option value="50">50개씩 보기</option>
+			</select>
 		</div>
-		<div class="container">
-			<ul>
-				<li class="thumbnail"></li>
-				<li></li>
-				<li></li>
-			</ul>
-		</div>
+		<div class="container"></div>
+		<button id="nextPage">더보기></button>
 		<script>
 			let search = '';
-			$('#inputTitle').onchange(function (e) {
+			let numOfRows = 10;
+			let pageNo = 1;
+			let totalCount = 0;
+			let totalPages = 0;
+
+			searchBooks();
+			$('.search').on('click', '#btn', function (e) {
 				search = $('input').val();
 				searchBooks(search);
+			});
+
+			$('.search').on('change', '#listCnt', function (e) {
+				numOfRows = $('#listCnt').val();
+				searchBooks(search, numOfRows);
+			});
+
+			$('#nextPage').click(function () {
+				if (numOfRows != 0) {
+					if (totalCount % numOfRows == 0) {
+						totalPages = Math.ceil(totalCount / numOfRows);
+					} else {
+						totalPages = Math.ceil(totalCount / numOfRows + 1);
+					}
+				} else {
+					numOfRows = 10;
+				}
+
+				console.log(pageNo, totalPages, totalCount);
+				if (pageNo < totalPages) {
+					pageNo++;
+					searchBooks(search, pageNo);
+				} else if (pageNo == totalPages) {
+					$(this).attr('disabled', true);
+				}
 			});
 
 			function searchBooks(input) {
 				$.ajax({
 					method: 'GET',
-					url: 'https://dapi.kakao.com/v3/search/book?target=title&',
+					url: `https://dapi.kakao.com/v3/search/book?target=title&page=${pageNo}&size=${numOfRows}&`,
 					data: {
 						query: input,
 					},
@@ -39,22 +70,25 @@
 				}).done(function (data) {
 					parsingData(data);
 				});
+
 				let output = '';
 				function parsingData(json) {
-					$(json).each(function (index, item) {
-						output += `<ul class="searchBook-result">
-						<li id="thumbnail"><img src="${json.documents[index].thumbnail}"/></li>
-						<li>${data.documents[index].title}</li>
-						<li>${data.documents[index].contents}</li>
-					</ul> -->`;
-
-						// $('li')[1].append(data.documents[0].title);
-						// $('li')[2].append(data.documents[0].contents);
-						// $('.thumbnail').append('<img src="' + data.documents[0].thumbnail + '"/>');
-						// $('.thumbnail').children().css('width', '300px');
+					totalCount = Number(json.meta.total_count);
+					let items = json.documents;
+					// console.log(totalCount);
+					$.each(items, function (index, item) {
+						output += `<ul class="searchBook-result">`;
+						if (item.thumbnail == '') {
+							output += `<li id="thumbnail"><img src="img/noimage.png"/></li>`;
+						} else {
+							output += `<li id="thumbnail"><img src="${item.thumbnail}"/></li>`;
+						}
+						output += `<li>${item.title}</li>
+							<li>${item.contents}</li>
+							<li>${item.price}</li>
+						</ul>`;
 					});
-					console.log(data);
-					$('.searchBook').append(output);
+					$('.container').html(output);
 				}
 			}
 		</script>
