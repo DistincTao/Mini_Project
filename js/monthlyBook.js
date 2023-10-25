@@ -101,6 +101,7 @@ function parsingMontylyBookData(xml) {
 		output += `<div class="monthlyBook-cnt">`;
 		output += `<div><img src="${imgLink}" alt="사진" class="monthlyBook-thumbNail" width="120px" height="172px"/></div>
 							<div class="monthlyBook-title">${title}</div>
+							<div class="monthlyBook-title">${auther}</div>
 						</div>`;
 	});
 	// console.log(xml);
