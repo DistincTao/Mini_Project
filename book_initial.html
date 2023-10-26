@@ -12,48 +12,110 @@
 		<script
 			type="text/javascript"
 			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9782112b5b273c3f5f61e2be0dda036e"></script>
-			<meta content="" name="description">
-			<meta content="" name="keywords">
-		
-			<!-- Favicons (파비콘) -->
-			<link href="img/favico.ico" rel="icon">
-			<!-- <link href="img/apple-touch-icon.png" rel="apple-touch-icon"> -->
-		
-			<!-- Fonts (폰트) -->
-			<link href="https://fonts.googleapis.com" rel="preconnect">
-			<link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-			<link
-				href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
-				rel="stylesheet">
-		
-			<!-- Vendor CSS Files -->
-			<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-			<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-			<link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-			<link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-			<link href="assets/vendor/aos/aos.css" rel="stylesheet">
-		
-			<!-- Template Main CSS File -->
-			<link href="assets/css/main.css" rel="stylesheet">
-		
-			<!-- =======================================================
+		<meta content="" name="description" />
+		<meta content="" name="keywords" />
+
+		<!-- Favicons (파비콘) -->
+		<link href="img/favico.ico" rel="icon" />
+		<!-- <link href="img/apple-touch-icon.png" rel="apple-touch-icon"> -->
+
+		<!-- Fonts (폰트) -->
+		<link href="https://fonts.googleapis.com" rel="preconnect" />
+		<link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+			rel="stylesheet" />
+
+		<!-- Vendor CSS Files -->
+		<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+		<link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet" />
+		<link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+		<link href="assets/vendor/aos/aos.css" rel="stylesheet" />
+
+		<!-- Template Main CSS File -->
+		<link href="assets/css/main.css" rel="stylesheet" />
+
+		<!-- =======================================================
 			* Template Name: Append
 			* Updated: Sep 18 2023 with Bootstrap v5.3.2
 			* Template URL: https://bootstrapmade.com/append-bootstrap-website-template/
 			* Author: BootstrapMade.com
 			* License: https://bootstrapmade.com/license/
 			======================================================== -->
-		</head>
 		<title>도서</title>
 		<style>
 			.monthlyBook,
 			.searchResult {
 				display: flex;
 			}
+			.searchBook-result {
+				list-style: none;
+			}
 		</style>
 	</head>
 	<body>
+		<body class="services-details-page" data-bs-spy="scroll" data-bs-target="#navmenu">
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header sticky-top d-flex align-items-center">
+    <div class="container-fluid d-flex align-items-center justify-content-between nav_title">
+      <!-- ★ 로고 -->
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.png" alt=""> -->
+        <h1>삼오일</h1>
+        <span>.</span>
+      </a>
+      <!-- ★ 로고 end -->
+
+      <!-- ★ 메인 네비게이션바 메뉴 nav menu -->
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html#hero">홈</a></li>
+          <!-- <li><a href="index.html#about">About</a></li> -->
+          <li><a href="index.html#services">취미</a></li>
+          <li><a href="index.html#portfolio">취미 모아보기</a></li>
+          <li><a href="index.html#team">팀 소개</a></li>
+          <!-- <li><a href="blog.html">Blog</a></li> -->
+          <li class="dropdown has-dropdown"><a href="#"><span>뺄까 고민중</span> <i class="bi bi-chevron-down"></i></a>
+            <ul class="dd-box-shadow">
+              <li><a href="#">Dropdown 1</a></li>
+              <li class="dropdown has-dropdown"><a href="#"><span>Deep Dropdown</span> <i
+                    class="bi bi-chevron-down"></i></a>
+                <ul class="dd-box-shadow">
+                  <li><a href="#">Deep Dropdown 1</a></li>
+                  <li><a href="#">Deep Dropdown 2</a></li>
+                  <li><a href="#">Deep Dropdown 3</a></li>
+                  <li><a href="#">Deep Dropdown 4</a></li>
+                  <li><a href="#">Deep Dropdown 5</a></li>
+                </ul>
+              </li>
+              <li><a href="#">Dropdown 2</a></li>
+              <li><a href="#">Dropdown 3</a></li>
+              <li><a href="#">Dropdown 4</a></li>
+            </ul>
+          </li>
+          <li><a href="index.html#contact">문의하기</a></li>
+        </ul>
+
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+      <!-- ★ 메인 네비게이션바 메뉴 nav menu end -->
+
+      <a class="btn-getstarted" href="index.html#about">참여하기</a>
+
+    </div>
+  </header><!-- End Header -->
 		<section>
+
+<ul class="portfolio-filters isotope-filters aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+            <li data-filter="*" class="">이달의 추천도서</li>
+            <li data-filter=".filter-app" class="filter-active">도서 검색</li>
+          </ul>
+
+
+
 			<div class="container">
 				<h2>이달의 추천 도서</h2>
 				<div class="monthlyBook"></div>
@@ -62,14 +124,24 @@
 			<div class="container">
 				<div class="search">
 					<div class="sidebar-item search-form">
-						<h3 class="sidebar-title">도서 검색</h3>
-							<input type="text" placeholder="찾고 싶은 책이 있으신가요?" id="searchInput">
+						<h2 class="sidebar-title">도서 검색</h2>
+
+						<div
+							class="sign-up-form d-flex aos-init aos-animate"
+							data-aos="fade-up"
+							data-aos-delay="300">
+							<input
+								type="text"
+								class="form-control"
+								placeholder="찾고 싶은 책이 있으신가요?"
+								id="searchInput" />
 							<select name="listCnt" id="listCnt">
 								<option value="10">10개씩 보기</option>
 								<option value="20">20개씩 보기</option>
 								<option value="50">50개씩 보기</option>
 							</select>
-							<button type="submit" id="btn"><i class="bi bi-search"></i></button>
+							<input type="submit" class="btn btn-primary" value="검색" id="btn" />
+						</div>
 					</div>
 				</div>
 				<div class="searchResult"></div>
@@ -83,7 +155,8 @@
 				<div class="library">
 					<div class="dropdown">
 						<select id="district">
-							<option value="강남구" checked>강남구</option>
+							<option value="" checked>----지역을 선택하세요----</option>
+							<option value="강남구">강남구</option>
 							<option value="강동구">강동구</option>
 							<option value="강북구">강북구</option>
 							<option value="강서구">강서구</option>
@@ -119,16 +192,16 @@
 				</div>
 			</div>
 		</section>
-		  <!-- Vendor JS Files -->
-			<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-			<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-			<script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-			<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-			<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-			<script src="assets/vendor/aos/aos.js"></script>
-			<script src="assets/vendor/php-email-form/validate.js"></script>
-		
-			<!-- Template Main JS File -->
-			<script src="assets/js/main.js"></script>	
+		<!-- Vendor JS Files -->
+		<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+		<script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+		<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+		<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+		<script src="assets/vendor/aos/aos.js"></script>
+		<script src="assets/vendor/php-email-form/validate.js"></script>
+
+		<!-- Template Main JS File -->
+		<script src="assets/js/main.js"></script>
 	</body>
 </html>

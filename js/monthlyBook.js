@@ -8,6 +8,7 @@ let totalPages = 0;
 $(function () {
 	getMonthlyBook();
 	searchingLib();
+	searchBooks();
 
 	$('.search').on('click', '#btn', function (e) {
 		search = $('input').val();
@@ -64,8 +65,9 @@ $(function () {
 	});
 
 	$('#district').change(function (e) {
-		console.log();
+		console.log($('#seoulLibrary'));
 		searchingLib();
+		// $('.modal-fullscreen .modal-footer,.modal-fullscreen .modal-header').css('border-radius: 0');
 	});
 });
 
@@ -75,6 +77,7 @@ function getMonthlyBook(xml) {
 		url: 'http://api.kcisa.kr/openapi/service/rest/meta13/getKPEF0101?serviceKey=a236b958-53f7-4b01-8ae6-d6862d54a0d7&numOfRows=10&pageNo=1',
 		method: 'GET',
 		datatype: 'xml',
+		async: false,
 	}).done(function (data) {
 		// console.log(data);
 		parsingMontylyBookData(data);
@@ -96,7 +99,7 @@ function parsingMontylyBookData(xml) {
 		auther = $(book).children().eq(15).text();
 		imgLink = $(book).children().eq(14).text().replaceAll('www', 'e');
 		link = $(book).children().eq(17).text();
-		
+
 		// console.log(title, description, auther, imgLink, link);
 		// console.log(imgLink);
 		output += `<div class="col-xl-4 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100"><article>
@@ -111,7 +114,7 @@ function parsingMontylyBookData(xml) {
 								</article>
 								</div>`;
 	});
-	output += `</div>`
+	output += `</div>`;
 	// console.log(xml);
 	// console.log(books);
 	$('.monthlyBook').html(output);
@@ -144,9 +147,15 @@ function searchBooks(input) {
 			} else {
 				output += `<li id="thumbnail"><img src="${item.thumbnail}"/></li>`;
 			}
-			output += `<li>${item.title}</li>
-							<li>${item.contents}</li>
-							<li>${item.price}</li>
+			output += `<li>${item.title}</li>`;
+			output += `<li>${item.publisher}</li>`;
+			output += `<li>${item.authors}</li>`;
+			output += `<li>${item.translators}</li>`;
+			output += `<li>${item.status}</li>`;
+			// <li>${item.title}</li>
+			// <li>${item.url}</li>
+			// <li>${item.contents}</li>
+			output += `<li>${item.price}</li>
 						</ul>`;
 		});
 		$('.searchResult').html(output);
@@ -159,6 +168,7 @@ function searchingLib() {
 		url: 'http://openapi.seoul.go.kr:8088/6645514d4664697336355956525956/json/SeoulPublicLibraryInfo/1/300',
 		method: 'GET',
 		datatype: 'JSON',
+		async: false,
 	}).done(function (data) {
 		// console.log(data);
 		parsingLibData(data.SeoulPublicLibraryInfo.row);
@@ -174,10 +184,11 @@ let homePage = '';
 let holiday = '';
 let lat = '';
 let lon = '';
+let output = '';
 
 // 세부 자료 분석 및 출력
 function parsingLibData(json) {
-	output = '<div class="faq-container">';
+	output = '<div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">';
 	$.each(json, function (index, item) {
 		district = json[index].CODE_VALUE;
 		libraryName = json[index].LBRRY_NAME;
@@ -192,12 +203,13 @@ function parsingLibData(json) {
 		// list 출력하기
 		if ($('#district').val() == district) {
 			console.log(district, libraryName);
-				output += `<div class="faq-item"><h3><span>${libraryName}</span></h3><div class="faq-content">`
-				output += `<p>주 소 : ${libraryAddr} / 전화번호 : ${libraryTel}</p><p>운영시간 : ${operation} / ${holiday}</p>`
-				output += `<i class="faq-toggle bi bi-chevron-right"></i></div>`
+			output += `<div class="faq-container">`;
+			output += `<div class="faq-item"><h3><span>${libraryName}</span></h3><div class="faq-content">`;
+			output += `<p>주 소 : ${libraryAddr} / 전화번호 : ${libraryTel}</p><p>운영시간 : ${operation} / ${holiday}</p>`;
+			output += `<i class="faq-toggle bi bi-chevron-right"></i></div></div>`;
 		}
 	});
-	output += `</div>`
+	output += `</div>`;
 	$('.contents').html(output);
 
 	// kakao Map API로 지도를 그리기
