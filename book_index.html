@@ -12,6 +12,7 @@
 		<!-- Favicons (파비콘) -->
 		<link href="img/favico.ico" rel="icon" />
 		<!-- <link href="img/apple-touch-icon.png" rel="apple-touch-icon"> -->
+		<script src="https://kit.fontawesome.com/acb94ab00c.js" crossorigin="anonymous"></script>
 
 		<!-- Fonts (폰트) -->
 		<link href="https://fonts.googleapis.com" rel="preconnect" />
@@ -46,13 +47,25 @@
 			#prevPage,
 			#nextPage {
 				margin: 20px auto;
-				/* float: left; */
 				width: 200px;
 			}
-			#prevPage {
-				/* display: block;
-				text-align: center; */
-				/* position: relative; */
+			i {
+				font-size: 40px;
+			}
+			.like {
+				width: 350px;
+				text-align: right;
+			}
+			.modal-content {
+				display: none;
+				width: 400px;
+				height: 400px;
+				border: 4px solid tomato;
+				position: absolute;
+				left: 300px;
+				top: 40px;
+				background-color: powderblue;
+				z-index: 3;
 			}
 		</style>
 	</head>
@@ -218,10 +231,12 @@
 					<div class="col-lg-8 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
 						<div id="bookSe" class="col-lg-8" data-aos="fade-up" data-aos-delay="200"></div>
 					</div>
-
-					<!-- <div class="library-map">
-								<div id="map" style="width: 500px; height: 500px"></div> -->
-					<!-- </div> -->
+					<div class="modal-content">
+						<div id="map" style="width: 500px; height: 500px"></div>
+						<div class="closeArea">
+							<span></span><b>닫기</b></span>
+						</div>
+					</div>
 				</div>
 				<!-- End Portfolio Item -->
 			</section>

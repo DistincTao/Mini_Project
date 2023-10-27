@@ -122,6 +122,7 @@ function parsingMontylyBookData(xml) {
 							  <div class="d-flex align-items-center">
 									<div class="post-meta">
 										<p class="post-author">${auther}</p>
+										<div class="like"><i class="fa-regular fa-bookmark"></i></div>
 									</div>
 								</div>
 								</article>
