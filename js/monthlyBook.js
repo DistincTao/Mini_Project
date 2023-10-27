@@ -77,6 +77,7 @@ $(function () {
 		console.log($('#seoulLibrary'));
 		searchingLib();
 	});
+
 	$('.faq').on('click', '.faq-item', function () {
 		$(this).toggleClass('faq-active');
 	});
@@ -211,8 +212,7 @@ let output = '';
 
 // 세부 자료 분석 및 출력
 function parsingLibData(json) {
-	// output = '<div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">';\
-	output += `<div class="faq-container">`;
+	let output = `<div class="faq-container">`;
 	$.each(json, function (index, item) {
 		district = json[index].CODE_VALUE;
 		libraryName = json[index].LBRRY_NAME;
