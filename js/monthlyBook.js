@@ -67,7 +67,6 @@ $(function () {
 	$('#district').change(function (e) {
 		console.log($('#seoulLibrary'));
 		searchingLib();
-		// $('.modal-fullscreen .modal-footer,.modal-fullscreen .modal-header').css('border-radius: 0');
 	});
 });
 
@@ -141,13 +140,13 @@ function searchBooks(input) {
 		let items = json.documents;
 		// console.log(totalCount);
 		$.each(items, function (index, item) {
-			output += `<ul class="searchBook-result">`;
+			output += `<div class="searchBook-result">`;
 			if (item.thumbnail == '') {
-				output += `<li id="thumbnail"><img src="img/noimage.png" width="120px" height="172px"/></li>`;
+				output += `<div id="thumbnail"><img src="img/noimage.png" width="120px" height="172px"/></div>`;
 			} else {
-				output += `<li id="thumbnail"><img src="${item.thumbnail}"/></li>`;
+				output += `<div id="thumbnail"><img src="${item.thumbnail}"/></div>`;
 			}
-			output += `<li>${item.title}</li>`;
+			output += `<div><ul><li>${item.title}</li>`;
 			output += `<li>${item.publisher}</li>`;
 			output += `<li>${item.authors}</li>`;
 			output += `<li>${item.translators}</li>`;
@@ -155,8 +154,7 @@ function searchBooks(input) {
 			// <li>${item.title}</li>
 			// <li>${item.url}</li>
 			// <li>${item.contents}</li>
-			output += `<li>${item.price}</li>
-						</ul>`;
+			output += `<li>${item.price}</li></ul></div>`;
 		});
 		$('.searchResult').html(output);
 	}
@@ -201,6 +199,8 @@ function parsingLibData(json) {
 		lon = json[index].XCNTS;
 
 		// list 출력하기
+		
+		
 		if ($('#district').val() == district) {
 			console.log(district, libraryName);
 			output += `<div class="faq-container">`;
@@ -209,8 +209,8 @@ function parsingLibData(json) {
 			output += `<i class="faq-toggle bi bi-chevron-right"></i></div></div>`;
 		}
 	});
-	output += `</div>`;
-	$('.contents').html(output);
+	// output += `</div>`;
+	$('.faq-container').html(output);
 
 	// kakao Map API로 지도를 그리기
 	// outputMap(lat, lon);
