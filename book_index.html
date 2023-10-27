@@ -7,7 +7,8 @@
 		<title>삼삼오오 우리들의 취미생활 개인 페이지</title>
 		<meta content="" name="description" />
 		<meta content="" name="keywords" />
-
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<script src="js/monthlyBook.js"></script>
 		<!-- Favicons (파비콘) -->
 		<link href="img/favico.ico" rel="icon" />
 		<!-- <link href="img/apple-touch-icon.png" rel="apple-touch-icon"> -->
@@ -29,9 +30,6 @@
 		<!-- Template Main CSS File -->
 		<link href="assets/css/main.css" rel="stylesheet" />
 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-		<script src="js/monthlyBook.js"></script>
-
 		<!-- =======================================================
   * Template Name: Append
   * Updated: Sep 18 2023 with Bootstrap v5.3.2
@@ -40,12 +38,21 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 		<style>
-			/* .monthlyBook,
-			.searchResult {
-				display: flex;
-			} */
-			ul{
-				list-style: none;
+			.pageButton {
+				display: block;
+				text-align: center;
+				justify-content: space-between;
+			}
+			#prevPage,
+			#nextPage {
+				margin: 20px auto;
+				/* float: left; */
+				width: 200px;
+			}
+			#prevPage {
+				/* display: block;
+				text-align: center; */
+				/* position: relative; */
 			}
 		</style>
 	</head>
@@ -128,30 +135,20 @@
 			<!-- End Page Title -->
 
 			<!-- ★ 여기부터 개인 영역 -->
-			<!-- <section id="service-details" class="service-details"> -->
-			<section id="portfolio" class="portfolio">
+			<section id="recent-posts" class="recent-posts">
 				<div class="container section-title aos-init aos-animate" data-aos="fade-up">
 					<h2>이달의 추천 도서</h2>
 				</div>
-				<div class="container">
-								<div class="monthlyBook"></div>
-								<!-- </div> -->
-							</div>
-							<!-- End Portfolio Item -->
-							</div>
-							<!-- End Portfolio Container -->
-						</div>
-					</div>
-				</div>
+				<div class="container monthlyBook"></div>
+				<!-- 이달의 도서 End   -->
+
+				<!-- 이달의 도서 section End -->
 			</section>
-			<section>
+			<section id="recent-posts" class="recent-posts">
 				<div class="container section-title aos-init aos-animate" data-aos="fade-up">
 					<h2>도서 검색</h2>
-				</div>
-				<div class="container">
 					<div class="search">
 						<div class="sidebar-item search-form">
-
 							<div
 								class="sign-up-form d-flex aos-init aos-animate"
 								data-aos="fade-up"
@@ -170,58 +167,61 @@
 							</div>
 						</div>
 					</div>
-					<div class="searchResult"></div>
-					<button type="button" class="btn btn-danger" id="prevPage"><이전</button>
-					<button type="button" class="btn btn-danger" id="nextPage">다음></button>
-					<div class="container"></div>
 				</div>
-			</div>
-			<!-- End Portfolio Item -->
-		</section>
-<section>
-	<div class="container section-title aos-init aos-animate" data-aos="fade-up">
-		<h2>도서관</h2>
-	</div>
+				<div class="container bookSearchResult"></div>
+				<div class="pageButton">
+					<button type="button" class="btn btn-danger" id="prevPage">이전</button>
+					<button type="button" class="btn btn-danger" id="nextPage">다음</button>
+				</div>
+
+				<!-- End Portfolio Item -->
+			</section>
+			<section id="faq" class="faq">
 				<div class="container">
-
-					<!-- <div class="library"> -->
-
-					<div class="dropdown">
-						<select id="district">
-							<option value="" checked>----지역을 선택하세요----</option>
-							<option value="강남구">강남구</option>
-							<option value="강동구">강동구</option>
-							<option value="강북구">강북구</option>
-							<option value="강서구">강서구</option>
-							<option value="관악구">관악구</option>
-							<option value="광진구">광진구</option>
-							<option value="구로구">구로구</option>
-							<option value="금천구">금천구</option>
-							<option value="노원구">노원구</option>
-							<option value="도봉구">도봉구</option>
-							<option value="동대문구">동대문구</option>
-							<option value="동작구">동작구</option>
-							<option value="마포구">마포구</option>
-							<option value="서대문구">서대문구</option>
-							<option value="서초구">서초구</option>
-							<option value="성동구">성동구</option>
-							<option value="성북구">성북구</option>
-							<option value="송파구">송파구</option>
-							<option value="양천구">양천구</option>
-							<option value="영등포구">영등포구</option>
-							<option value="용산구">용산구</option>
-							<option value="은평구">은평구</option>
-							<option value="종로구">종로구</option>
-							<option value="중구">중구</option>
-							<option value="중랑구">중랑구</option>
-						</select>
+					<div class="row gy-4">
+						<div class="col-lg-4 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+							<div class="content px-xl-5">
+								<h3>
+									<span><strong>도서관에 가볼래??</strong></span>
+								</h3>
+								<select id="district">
+									<option value="" checked>----지역을 선택하세요----</option>
+									<option value="강남구">강남구</option>
+									<option value="강동구">강동구</option>
+									<option value="강북구">강북구</option>
+									<option value="강서구">강서구</option>
+									<option value="관악구">관악구</option>
+									<option value="광진구">광진구</option>
+									<option value="구로구">구로구</option>
+									<option value="금천구">금천구</option>
+									<option value="노원구">노원구</option>
+									<option value="도봉구">도봉구</option>
+									<option value="동대문구">동대문구</option>
+									<option value="동작구">동작구</option>
+									<option value="마포구">마포구</option>
+									<option value="서대문구">서대문구</option>
+									<option value="서초구">서초구</option>
+									<option value="성동구">성동구</option>
+									<option value="성북구">성북구</option>
+									<option value="송파구">송파구</option>
+									<option value="양천구">양천구</option>
+									<option value="영등포구">영등포구</option>
+									<option value="용산구">용산구</option>
+									<option value="은평구">은평구</option>
+									<option value="종로구">종로구</option>
+									<option value="중구">중구</option>
+									<option value="중랑구">중랑구</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-8 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+						<div id="bookSe" class="col-lg-8" data-aos="fade-up" data-aos-delay="200"></div>
 					</div>
 
-					<div class="faq-container">
-						<!-- <div class="library-map">
-							<div id="map" style="width: 500px; height: 500px"></div>
-						</div> -->
-					</div>
+					<!-- <div class="library-map">
+								<div id="map" style="width: 500px; height: 500px"></div> -->
+					<!-- </div> -->
 				</div>
 				<!-- End Portfolio Item -->
 			</section>

@@ -9,19 +9,28 @@ $(function () {
 	getMonthlyBook();
 	searchingLib();
 	searchBooks();
+	$('#nextPage').css({ display: 'none' });
+	$('#prevPage').css({ display: 'none' });
 
+	// $('.search').on('change', '#listCnt', function (e) {
+	// 	numOfRows = e.target.value;
 	$('.search').on('click', '#btn', function (e) {
+		// console.log('1');
 		search = $('input').val();
 		pageNo = 1;
-		searchBooks(search, pageNo);
-	});
-
-	$('.search').on('change', '#listCnt', function (e) {
-		search = $('input').val();
-		numOfRows = $('#listCnt').val();
-		pageNo = 1;
+		numOfRows = 10;
 		searchBooks(search, pageNo, numOfRows);
+		$('#nextPage').css({ display: 'inline-block' });
+		$('#prevPage').css({ display: 'inline-block' });
 	});
+	console.log(numOfRows);
+
+	// search = $('input').val();
+	// pageNo = 1;
+	// searchBooks(search, pageNo, numOfRows);
+	// $('#nextPage').css({ display: 'inline-block' });
+	// $('#prevPage').css({ display: 'inline-block' });
+	// });
 
 	$('#nextPage').click(function () {
 		if (numOfRows != 0) {
@@ -59,14 +68,17 @@ $(function () {
 			pageNo--;
 			search = $('input').val();
 			searchBooks(search, pageNo, numOfRows);
-		} else if (pageNo == 0) {
-			$(this).attr('disabled', true);
+		} else if (pageNo == 1) {
+			$(this).css('disabled', true);
 		}
 	});
 
 	$('#district').change(function (e) {
 		console.log($('#seoulLibrary'));
 		searchingLib();
+	});
+	$('.faq').on('click', '.faq-item', function () {
+		$(this).toggleClass('faq-active');
 	});
 });
 
@@ -101,14 +113,16 @@ function parsingMontylyBookData(xml) {
 
 		// console.log(title, description, auther, imgLink, link);
 		// console.log(imgLink);
-		output += `<div class="col-xl-4 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100"><article>
-							<div class="post-img"><img src="${imgLink}" class="img-fluid" width="240px" height="340px">
-			</div>`;
-		output += `<h2 class="title"><a href="#">${title}</a></h2>
-								<div class="d-flex align-items-center">
-								<div class="post-meta">
-								<p class="post-author">${auther}</p>
-								</div>
+		output += `<div class="col-xl-4 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+								<article>
+									<div class="post-img">
+										<img src="${imgLink}" class="img-fluid" width="400px">
+									</div>`;
+		output += `<h2 class="title">${title}</h2>
+							  <div class="d-flex align-items-center">
+									<div class="post-meta">
+										<p class="post-author">${auther}</p>
+									</div>
 								</div>
 								</article>
 								</div>`;
@@ -139,24 +153,34 @@ function searchBooks(input) {
 		totalCount = Number(json.meta.total_count);
 		let items = json.documents;
 		// console.log(totalCount);
+		output = `<div class="row gy-4">`;
 		$.each(items, function (index, item) {
-			output += `<div class="searchBook-result">`;
+			output += `<div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="100"><article>`;
 			if (item.thumbnail == '') {
-				output += `<div id="thumbnail"><img src="img/noimage.png" width="120px" height="172px"/></div>`;
+				output += `<div class="post-img">
+                <img src="img/noimage.png" class="img-fluid" width="400px">
+              </div>`;
 			} else {
-				output += `<div id="thumbnail"><img src="${item.thumbnail}"/></div>`;
+				output += `<div class="post-img">
+                <img src="${item.thumbnail}" class="img-fluid" width="400px">
+              </div>`;
 			}
-			output += `<div><ul><li>${item.title}</li>`;
-			output += `<li>${item.publisher}</li>`;
-			output += `<li>${item.authors}</li>`;
-			output += `<li>${item.translators}</li>`;
-			output += `<li>${item.status}</li>`;
+			output += `<h2 class="title"><a href="#">${item.title}</a></h2>`;
+			output += `<div class="d-flex align-items-center"><div class="post-meta">`;
+			if (item.translators != '') {
+				output += `<p class="post-author">${item.authors} / ${item.translators}</p>`;
+			} else {
+				output += `<p class="post-author">${item.authors}</p>`;
+			}
+
+			// output += `<p>${item.status}</p>`;
 			// <li>${item.title}</li>
 			// <li>${item.url}</li>
 			// <li>${item.contents}</li>
-			output += `<li>${item.price}</li></ul></div>`;
+			output += `<p>${item.price}원</p></div></div></article></div>`;
 		});
-		$('.searchResult').html(output);
+		output += `</div>`;
+		$('.bookSearchResult').html(output);
 	}
 }
 
@@ -186,7 +210,8 @@ let output = '';
 
 // 세부 자료 분석 및 출력
 function parsingLibData(json) {
-	output = '<div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">';
+	// output = '<div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">';\
+	output += `<div class="faq-container">`;
 	$.each(json, function (index, item) {
 		district = json[index].CODE_VALUE;
 		libraryName = json[index].LBRRY_NAME;
@@ -199,18 +224,26 @@ function parsingLibData(json) {
 		lon = json[index].XCNTS;
 
 		// list 출력하기
-		
-		
+		// output += ``;
 		if ($('#district').val() == district) {
-			console.log(district, libraryName);
-			output += `<div class="faq-container">`;
-			output += `<div class="faq-item"><h3><span>${libraryName}</span></h3><div class="faq-content">`;
-			output += `<p>주 소 : ${libraryAddr} / 전화번호 : ${libraryTel}</p><p>운영시간 : ${operation} / ${holiday}</p>`;
-			output += `<i class="faq-toggle bi bi-chevron-right"></i></div></div>`;
+			console.log(libraryName);
+			output += `<div class="faq-item" width="100%">
+			<h3>
+			<span class="num">${libraryName}</span>
+			</h3>`;
+			output += `<div class="faq-content">
+			<p>주 소 : ${libraryAddr}</p>
+			<p>전화번호 : ${libraryTel}</p>
+			<p>운영시간 : ${operation}</p>
+			<p>휴무일 : ${holiday}</p>
+			</div>`;
+			output += `<i class="faq-toggle bi bi-chevron-right"></i>
+			</div>`;
 		}
 	});
-	// output += `</div>`;
-	$('.faq-container').html(output);
+	output += `</div>`;
+
+	$('#bookSe').html(output);
 
 	// kakao Map API로 지도를 그리기
 	// outputMap(lat, lon);
