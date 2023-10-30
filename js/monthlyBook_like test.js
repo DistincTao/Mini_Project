@@ -28,7 +28,7 @@ $(function () {
 		$('#nextPage').css({ display: 'inline-block' });
 		$('#prevPage').css({ display: 'inline-block' });
 
-		console.log(numOfRows);
+		// console.log(numOfRows);
 	});
 
 	$('#nextPage').click(function () {
@@ -73,17 +73,29 @@ $(function () {
 	});
 
 	$('#district').change(function (e) {
-		console.log($('#seoulLibrary'));
+		// console.log($('#seoulLibrary'));
 		searchingLib();
 	});
 
 	$('.faq').on('click', '.faq-item', function () {
 		$(this).toggleClass('faq-active');
+		// map.relayout();
+		// openModal($(this).attr('lat'), $(this).attr('lon'));
+		// console.log($(this).attr('lat'));
 	});
 
 	$('.like').on('click', '.fa-regular', function (e) {
 		console.log('1');
 		$(this).toggleClass('fa-solid');
+	});
+
+	$('.bookSearchResult').on('click', '.title', function (e) {
+		openModal();
+	});
+
+	$('.closeArea').on('click', '.closeArea', function (e) {
+		closeModal();
+		console.log(e.target);
 	});
 });
 
@@ -116,27 +128,13 @@ function parsingMontylyBookData(xml) {
 		imgLink = $(book).children().eq(14).text().replaceAll('www', 'e');
 		link = $(book).children().eq(17).text();
 
-		// console.log(title, description, auther, imgLink, link);
-		// console.log(imgLink);
 		output += `<div class="col-xl-4 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
-								<article>
-									<div class="post-img">
-										<img src="${imgLink}" class="img-fluid" width="400px">
-									</div>`;
-		output += `<h2 class="title">${title}</h2>
-							  <div class="d-flex align-items-center">
-									<div class="post-meta">
-										<p class="post-author">${auther}</p>`;
-		// output += `<div class="like"><i class="fa-regular fa-bookmark"></i></div>`;
-		output += `
-									</div>
-								</div>
-								</article>
-								</div>`;
+								<article><div class="post-img"><img src="${imgLink}" class="img-fluid" width="400px"></div>`;
+		output += `<h2 class="title">${title}</h2><div class="d-flex align-items-center"><div class="post-meta">
+								<p class="post-author">${auther}</p>`;
+		output += `</div></div></article></div>`;
 	});
 	output += `</div>`;
-	// console.log(xml);
-	// console.log(books);
 	$('.monthlyBook').html(output);
 }
 
@@ -152,67 +150,69 @@ function searchBooks(input) {
 			Authorization: 'KakaoAK 0f7acd5ca96b1d76578d02adc4161263',
 		},
 	}).done(function (data) {
-		parsingBookData(data);
+		printBookData(data);
 	});
+}
 
-	let output = '';
-	function parsingBookData(json) {
-		totalCount = Number(json.meta.total_count);
-		let items = json.documents;
-		// console.log(totalCount);
-		output = `<div class="row gy-4">`;
-		$.each(items, function (index, item) {
-			output += `<div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="100"><article>`;
-			// output += `<div class="col-xl-4 col-md-6" data-aos="fade-up"><article>`;
-			if (item.thumbnail == '') {
-				output += `<div class="post-img">
-                <img src="img/noimage.png" class="img-fluid" width="400px">
-              </div>`;
-			} else {
-				output += `<div class="post-img">
-                <img src="${item.thumbnail}" class="img-fluid" width="400px">
-              </div>`;
-			}
-			output += `<h2 class="title"><a href="#">${item.title}</a></h2>`;
-			output += `<div class="d-flex align-items-center"><div class="post-meta">`;
+// function parsingBookData(json) {
+// 	let items = json.documents;
 
-			if (item.translators != '') {
-				output += `<p class="post-author">${item.authors} / ${item.translators}</p>`;
-			} else {
-				output += `<p class="post-author">${item.authors}</p>`;
-			}
+// 	$.each(items, function (index, item) {});
+// }
 
-			// output += `<p>${item.status}</p>`;
-			// <li>${item.title}</li>
-			// <li>${item.url}</li>
-			// <li>${item.contents}</li>
-			output += `<p>${item.price}원</p>`;
+let searchOutput = '';
+function printBookData(json) {
+	totalCount = Number(json.meta.total_count);
+	let items = json.documents;
+	searchOutput = `<div class="row gy-4">`;
 
-			if (!getCookie(item.isbn)) {
-				console.log(getCookie(item.isbn), item.isbn);
-				output += `<div class="like"><i class="fa-regular fa-bookmark" id="${item.isbn}"></i></div>`;
-			} else {
-				output += `<div class="like"><i class="fa-regular fa-solid fa-bookmark" id="${item.isbn}"></i></div>`;
-			}
+	$.each(items, function (index, item) {
+		searchOutput += `<div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="100"><article>`;
 
-			output += `</div></div></article></div>`;
-		});
-		output += `</div>`;
-		$('.bookSearchResult').html(output);
-		$('.like').on('click', '.fa-bookmark', function (e) {
-			if (!getCookie(this.id)) {
-				console.log(this.id, `BookMark${this.id}`);
-				// saveCookie('BookMark', this.id, 30);
-				saveCookie(this.id, `BookMark${this.id}`, 30);
-				$(this).toggleClass('fa-solid');
-				// 		// bookCookies.push(`${this.id}`);
-			} else {
-				delCookie(this.id, `BookMark${this.id}`);
-				$(this).toggleClass('fa-solid');
-				// 		// bookCookies.pop(`${this.id}`);
-			}
-		});
-	}
+		if (item.thumbnail == '') {
+			searchOutput += `<div class="post-img"><img src="img/noimage.png" class="img-fluid" width="400px"></div>`;
+		} else {
+			searchOutput += `<div class="post-img"><img src="${item.thumbnail}" class="img-fluid" width="400px"></div>`;
+		}
+
+		searchOutput += `<h2 class="title"><a>${item.title}</a></h2>`;
+		searchOutput += `<div class="d-flex align-items-center"><div class="post-meta">`;
+
+		if (item.translators != '') {
+			searchOutput += `<p class="post-author">${item.authors} / ${item.translators}</p>`;
+		} else {
+			searchOutput += `<p class="post-author">${item.authors}</p>`;
+		}
+
+		searchOutput += `<p>${item.price}원</p>`;
+
+		if (!getCookie(item.isbn)) {
+			searchOutput += `<div class="like"><i class="fa-regular fa-bookmark" id="${item.isbn}"></i></div>`;
+		} else {
+			searchOutput += `<div class="like"><i class="fa-regular fa-solid fa-bookmark" id="${item.isbn}"></i></div>`;
+		}
+
+		searchOutput += `</div></div></article>`;
+		searchOutput += `<div class="modal-content"><h2>${item.title}</h2>`;
+		searchOutput += `<p>${item.contents}<p>`;
+		searchOutput += `<p>출판사 : ${item.publisher}<p>`;
+		searchOutput += `<p>저자 : ${item.authors}<p>`;
+		if (item.translators != '') {
+			searchOutput += `<p>역자 : ${item.translators}<p>`;
+		}
+		searchOutput += `<div class="closeArea"><span onclick="closeModal()"><b>닫기</b></span></div></div></div>`;
+	});
+	searchOutput += `</div>`;
+	$('.bookSearchResult').html(searchOutput);
+	$('.like').on('click', '.fa-bookmark', function (e) {
+		if (!getCookie(this.id)) {
+			saveCookie(this.id, `BookMark${this.id}`, 30);
+			$(this).toggleClass('fa-solid');
+		} else {
+			delCookie(this.id, `BookMark${this.id}`);
+			$(this).toggleClass('fa-solid');
+		}
+	});
 }
 
 // 쿠키 관련 함수
@@ -222,14 +222,15 @@ function saveCookie(name, val, expDate) {
 	let newCookie = name + '=' + val + ';expires=' + now.toUTCString();
 	document.cookie = newCookie; // 쿠키 저장
 }
+
 // 해당 cookie를 삭제하는 함수
 function delCookie(name, val) {
-	// myCooky 쿠키만 삭제
-	// 삭제할 쿠키의 expires 값을 현재 날짜 , 시간으로 재설정하여 다시 저장 (overwrite)
+	// 쿠키 삭제
 	let now = new Date();
 	let cookie = name + '=' + val + ';expires=' + now.toUTCString();
 	document.cookie = cookie;
 }
+
 let cookName = [];
 function getCookie(name) {
 	if (document.cookie != '') {
@@ -258,7 +259,6 @@ function searchingLib() {
 		datatype: 'JSON',
 		async: false,
 	}).done(function (data) {
-		// console.log(data);
 		parsingLibData(data.SeoulPublicLibraryInfo.row);
 	});
 }
@@ -289,48 +289,46 @@ function parsingLibData(json) {
 		lon = json[index].XCNTS;
 
 		// list 출력하기
-		// output += ``;
 		if ($('#district').val() == district) {
-			console.log(libraryName);
-			output += `<div class="faq-item" width="100%">
-			<h3>
-			<span class="num">${libraryName}</span>
-			</h3>`;
+			output += `<div class="faq-item" width="100%"><h3><span class="num" >${libraryName}</span></h3>`;
 			output += `<div class="faq-content">
 			<p>주 소 : ${libraryAddr}</p>
 			<p>전화번호 : ${libraryTel}</p>
-			<p>운영시간 : ${operation}</p>
-			<p>휴무일 : ${holiday}</p>
-			</div>`;
-			output += `<i class="faq-toggle bi bi-chevron-right"></i>
-			</div>`;
+			<p>운영시간 : ${operation} / 휴무일 : ${holiday}</p></div>`;
+			output += `<i class="faq-toggle bi bi-chevron-right"></i></div>`;
 		}
 	});
 	output += `</div>`;
 
 	$('#bookSe').html(output);
-
 	// kakao Map API로 지도를 그리기
-	// outputMap(lat, lon);
 }
 
-function outputMap(lat, lon) {
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-		mapOption = {
-			center: new kakao.maps.LatLng(lat, lon), // 지도의 중심좌표
-			level: 2, // 지도의 확대 레벨
-		};
+// function outputMap(lat, lon) {
+// 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+// 		mapOption = {
+// 			center: new kakao.maps.LatLng(lat, lon), // 지도의 중심좌표
+// 			level: 2, // 지도의 확대 레벨
+// 		};
 
-	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+// 	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
-	// 마커가 표시될 위치입니다
-	var markerPosition = new kakao.maps.LatLng(lat, lon);
+// 	// 마커가 표시될 위치입니다
+// 	var markerPosition = new kakao.maps.LatLng(lat, lon);
 
-	// 마커를 생성합니다
-	var marker = new kakao.maps.Marker({
-		position: markerPosition,
-	});
+// 	// 마커를 생성합니다
+// 	var marker = new kakao.maps.Marker({
+// 		position: markerPosition,
+// 	});
 
-	// 마커가 지도 위에 표시되도록 설정합니다
-	marker.setMap(map);
+// 	// 마커가 지도 위에 표시되도록 설정합니다
+// 	marker.setMap(map);
+// }
+
+function openModal() {
+	// alert("!");
+	$('.modal-content').eq(0).css({ display: 'block' });
+}
+function closeModal() {
+	$('.modal-content').eq(0).css({ display: 'none' });
 }
