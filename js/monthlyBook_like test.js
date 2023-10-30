@@ -4,6 +4,7 @@ let numOfRows = 10;
 let pageNo = 1;
 let totalCount = 0;
 let totalPages = 0;
+let bookCookies = [];
 
 $(function () {
 	getMonthlyBook();
@@ -12,8 +13,6 @@ $(function () {
 	$('#nextPage').css({ display: 'none' });
 	$('#prevPage').css({ display: 'none' });
 
-	// $('.search').on('change', '#listCnt', function (e) {
-	// 	numOfRows = e.target.value;
 	$('.search').on('click', '#btn', function (e) {
 		// console.log('1');
 		search = $('input').val();
@@ -24,13 +23,6 @@ $(function () {
 		$('#prevPage').css({ display: 'inline-block' });
 	});
 	console.log(numOfRows);
-
-	// search = $('input').val();
-	// pageNo = 1;
-	// searchBooks(search, pageNo, numOfRows);
-	// $('#nextPage').css({ display: 'inline-block' });
-	// $('#prevPage').css({ display: 'inline-block' });
-	// });
 
 	$('#nextPage').click(function () {
 		if (numOfRows != 0) {
@@ -81,7 +73,16 @@ $(function () {
 	$('.faq').on('click', '.faq-item', function () {
 		$(this).toggleClass('faq-active');
 	});
+
+	$('.like').on("click", ".fa-regular", function (e){
+		console.log('1');
+		$(this).toggleClass('fa-solid');
+	});
+
 });
+
+
+
 
 // 이달의 도서 자료 가져오기
 function getMonthlyBook(xml) {
@@ -122,8 +123,9 @@ function parsingMontylyBookData(xml) {
 		output += `<h2 class="title">${title}</h2>
 							  <div class="d-flex align-items-center">
 									<div class="post-meta">
-										<p class="post-author">${auther}</p>
-										<div class="like"><i class="fa-regular fa-bookmark"></i></div>
+										<p class="post-author">${auther}</p>`;
+										// output += `<div class="like"><i class="fa-regular fa-bookmark"></i></div>`;
+										output += `
 									</div>
 								</div>
 								</article>
@@ -150,6 +152,7 @@ function searchBooks(input) {
 		parsingBookData(data);
 	});
 
+
 	let output = '';
 	function parsingBookData(json) {
 		totalCount = Number(json.meta.total_count);
@@ -158,6 +161,7 @@ function searchBooks(input) {
 		output = `<div class="row gy-4">`;
 		$.each(items, function (index, item) {
 			output += `<div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="100"><article>`;
+			// output += `<div class="col-xl-4 col-md-6" data-aos="fade-up"><article>`;
 			if (item.thumbnail == '') {
 				output += `<div class="post-img">
                 <img src="img/noimage.png" class="img-fluid" width="400px">
@@ -169,6 +173,7 @@ function searchBooks(input) {
 			}
 			output += `<h2 class="title"><a href="#">${item.title}</a></h2>`;
 			output += `<div class="d-flex align-items-center"><div class="post-meta">`;
+
 			if (item.translators != '') {
 				output += `<p class="post-author">${item.authors} / ${item.translators}</p>`;
 			} else {
@@ -179,12 +184,88 @@ function searchBooks(input) {
 			// <li>${item.title}</li>
 			// <li>${item.url}</li>
 			// <li>${item.contents}</li>
-			output += `<p>${item.price}원</p></div></div></article></div>`;
+			output += `<p>${item.price}원</p>`
+			
+
+
+			if (readCookie(item.isbn)) {
+				console.log(readCookie(item.isbn), item.isbn); 
+				output += `<div class="like"><i class="fa-regular fa-bookmark" id="${item.isbn}"></i></div>`;
+			} else {
+				output += `<div class="like"><i class="fa-regular fa-solid fa-bookmark" id="${item.isbn}"></i></div>`;
+			}
+
+			output += `</div></div></article></div>`;
 		});
 		output += `</div>`;
 		$('.bookSearchResult').html(output);
+		$('.like').on("click", ".fa-bookmark", function (e){
+			if (!readCookie(this.id)) {
+		// 		// console.log(this.id,"BookMark");
+				saveCookie(this.id, "BookMark", 30);	
+				$(this).toggleClass('fa-solid');
+		// 		// bookCookies.push(`${this.id}`);
+			} else {
+				delCookie(this.id);
+				$(this).toggleClass('fa-solid');
+		// 		// bookCookies.pop(`${this.id}`);
+			}
+		});
 	}
 }
+
+// 쿠키 관련 함수
+function saveCookie(name, val, expDate) {
+	let now = new Date();
+	now.setDate(now.getDate() + Number(expDate));
+	let newCookie = name + '=' + val + ';expires=' + now.toUTCString();
+	document.cookie = newCookie; // 쿠키 저장
+}
+// 해당 cookie를 삭제하는 함수
+function delCookie(name, val) {
+	// myCooky 쿠키만 삭제
+	// 삭제할 쿠키의 expires 값을 현재 날짜 , 시간으로 재설정하여 다시 저장 (overwrite)
+	let now = new Date();
+	let cookie = name + '=' + val + ';expires=' + now.toUTCString();
+	document.cookie = cookie;
+}
+let cookName = [];
+
+function readCookie(name) {
+	let cookArr = document.cookie.split('; ');
+	let searchName = name;
+	// console.log(searchName);
+	for (let i = 0; i < cookArr.length; i++) {
+		let cookName = cookArr[i].split('=')[0];
+		// let cookValue = cookArr[i].split('=')[1];
+		// console.log(cookName, cookValue);
+		if (cookName != searchName) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+}
+
+// function readCookie() {
+// 	let cookArr = document.cookie.split('; ');
+// 	// let searchName = name;
+// 	console.log(cookArr, cookArr.length);
+// 	$.each(cookArr, function (index, cookie) {
+// 		cookName[index] =`${cookie.replace(`=BookMark`, '')}`;
+// 		console.log(cookName);
+// 		console.log(bookCookies);
+// 	})
+// 	for (let i = 0; i < cookName.length; i++) {
+// 		for (let j = 0; j <bookCookies.length; j++) {
+// 			if (cookName[i] == bookCookies[j]) {
+// 				return true;
+// 			} else {
+// 				return false;
+// 			}
+// 		}
+// 	}
+// }
 
 // 서울 시 도서관 자료 가저오기
 function searchingLib() {
