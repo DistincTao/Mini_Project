@@ -12,19 +12,23 @@ $(function () {
 	$('#nextPage').css({ display: 'none' });
 	$('#prevPage').css({ display: 'none' });
 
-	// $('.search').on('change', '#listCnt', function (e) {
-	// 	numOfRows = e.target.value;
 	$('.search').on('click', '#btn', function (e) {
-		// console.log('1');
+		$('.search').on('change', '#listCnt', function (e) {
+			numOfRows = e.target.value;
+		});
+		console.log('1');
 		search = $('input').val();
 		pageNo = 1;
-		numOfRows = 10;
+		// numOfRows = 10;
+
+		// console.log('1');
+
 		searchBooks(search, pageNo, numOfRows);
 		$('#nextPage').css({ display: 'inline-block' });
 		$('#prevPage').css({ display: 'inline-block' });
-	});
-	console.log(numOfRows);
 
+		console.log(numOfRows);
+	});
 	// search = $('input').val();
 	// pageNo = 1;
 	// searchBooks(search, pageNo, numOfRows);
@@ -139,7 +143,7 @@ function parsingMontylyBookData(xml) {
 function searchBooks(input) {
 	$.ajax({
 		method: 'GET',
-    url: `https://dapi.kakao.com/v3/search/book?target=title&page=${pageNo}&size=${numOfRows}&`,
+		url: `https://dapi.kakao.com/v3/search/book?target=title&page=${pageNo}&size=${numOfRows}&`,
 		data: {
 			query: input,
 		},
