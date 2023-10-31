@@ -17,7 +17,7 @@ $(function () {
 		$('.search').on('change', '#listCnt', function (e) {
 			numOfRows = e.target.value;
 		});
-		console.log('1');
+		// console.log('1');
 		search = $('input').val();
 		pageNo = 1;
 		// numOfRows = 10;
@@ -90,12 +90,13 @@ $(function () {
 	});
 
 	$('.bookSearchResult').on('click', '.title', function (e) {
-		openModal();
+		openModal(this.id);
+		console.log(this.id);
 	});
 
-	$('.closeArea').on('click', '.closeArea', function (e) {
-		closeModal();
-		console.log(e.target);
+	$('.bookSearchResult').on('click', '.closeArea', function (e) {
+		closeModal(this.id);
+		console.log(this.id);
 	});
 });
 
@@ -175,7 +176,7 @@ function printBookData(json) {
 			searchOutput += `<div class="post-img"><img src="${item.thumbnail}" class="img-fluid" width="400px"></div>`;
 		}
 
-		searchOutput += `<h2 class="title"><a>${item.title}</a></h2>`;
+		searchOutput += `<h2 class="title" id="${index}" ><a>${item.title}</a></h2>`;
 		searchOutput += `<div class="d-flex align-items-center"><div class="post-meta">`;
 
 		if (item.translators != '') {
@@ -193,14 +194,14 @@ function printBookData(json) {
 		}
 
 		searchOutput += `</div></div></article>`;
-		searchOutput += `<div class="modal-content"><h2>${item.title}</h2>`;
+		searchOutput += `<div class="modal-content" id='${index}'><h2>${item.title}</h2>`;
 		searchOutput += `<p>${item.contents}<p>`;
 		searchOutput += `<p>출판사 : ${item.publisher}<p>`;
 		searchOutput += `<p>저자 : ${item.authors}<p>`;
 		if (item.translators != '') {
 			searchOutput += `<p>역자 : ${item.translators}<p>`;
 		}
-		searchOutput += `<div class="closeArea"><span onclick="closeModal()"><b>닫기</b></span></div></div></div>`;
+		searchOutput += `<div class="closeArea" id="${index}"><span><b>닫기</b></span></div></div></div>`;
 	});
 	searchOutput += `</div>`;
 	$('.bookSearchResult').html(searchOutput);
@@ -299,7 +300,6 @@ function parsingLibData(json) {
 		}
 	});
 	output += `</div>`;
-
 	$('#bookSe').html(output);
 	// kakao Map API로 지도를 그리기
 }
@@ -325,10 +325,10 @@ function parsingLibData(json) {
 // 	marker.setMap(map);
 // }
 
-function openModal() {
+function openModal(num) {
 	// alert("!");
-	$('.modal-content').eq(0).css({ display: 'block' });
+	document.getElementsByClassName('modal-content')[Number(num)].style.display = 'block';
 }
-function closeModal() {
-	$('.modal-content').eq(0).css({ display: 'none' });
+function closeModal(num) {
+	document.getElementsByClassName('modal-content')[Number(num)].style.display = 'none';
 }
