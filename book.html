@@ -8,15 +8,17 @@
 		<meta content="" name="description" />
 		<meta content="" name="keywords" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-		<script src="js/monthlyBook_like test.js"></script>
-		<!-- <script
-			type="text/javascript"
-			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bd678920b4446aa83f3b6fe572172571"></script> -->
-		<!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d101a53adf29f1bad0f1e40e62fcb33a"></script> -->
+		<script src="js/book.js"></script>
+		<script
+			src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js"
+			integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH"
+			crossorigin="anonymous"></script>
+		<script>
+			Kakao.init('9782112b5b273c3f5f61e2be0dda036e'); // 사용하려는 앱의 JavaScript 키 입력
+		</script>
 
 		<!-- Favicons (파비콘) -->
 		<link href="img/favico.ico" rel="icon" />
-		<!-- <link href="img/apple-touch-icon.png" rel="apple-touch-icon"> -->
 		<script src="https://kit.fontawesome.com/acb94ab00c.js" crossorigin="anonymous"></script>
 
 		<!-- Fonts (폰트) -->
@@ -68,7 +70,8 @@
 			}
 			.modal-content {
 				display: none;
-				width: 700px;
+				width: auto;
+				max-width: 900px;
 				height: auto;
 				border: 4px solid #ff845f;
 				position: fixed;
@@ -80,6 +83,26 @@
 			}
 			.closeArea {
 				text-align: right;
+			}
+			.shareBtn {
+				width: 68px;
+				height: 69px;
+				text-align: center;
+				line-height: 70px;
+				position: fixed;
+				left: 50px;
+				top: 50%;
+				background-color: #e8f0fe;
+				padding: 10px;
+				box-shadow: 2px 2px 3px #ff845f;
+				border-radius: 10px;
+			}
+			.kakaoShare {
+				position: fixed;
+				right: 15px;
+				bottom: 80px;
+				box-shadow: 2px 2px 3px #ff845f;
+				border-radius: 10px;
 			}
 		</style>
 	</head>
@@ -143,7 +166,7 @@
 					<div class="container">
 						<div class="row d-flex justify-content-center text-center">
 							<div class="col-lg-8">
-								<h1>오늘도 책을 읽지 않는 당신에게...</h1>
+								<h1 id="pageName">오늘도 책을 읽지 않는 당신에게...</h1>
 								<p class="mb-0">자신도 읽지 않는 책을 궂이 남에게 권하는 모순적인 페이지!</p>
 							</div>
 						</div>
@@ -161,6 +184,14 @@
 			<!-- End Page Title -->
 
 			<!-- ★ 여기부터 개인 영역 -->
+			<!-- <div class="shareBtn"><i class="fa-solid fa-share-nodes"></i></div> -->
+			<div class="kakaoShare">
+				<a id="kakaotalk-sharing-btn" href="javascript:;">
+					<img
+						src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+						alt="카카오톡 공유 보내기 버튼" />
+				</a>
+			</div>
 			<!-- 이달의 도서 section Start -->
 			<section id="recent-posts" class="recent-posts">
 				<div class="container section-title aos-init aos-animate" data-aos="fade-up">
@@ -340,6 +371,5 @@
 
 		<!-- Template Main JS File -->
 		<script src="assets/js/main.js"></script>
-
 	</body>
 </html>

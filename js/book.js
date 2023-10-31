@@ -10,9 +10,10 @@ $(function () {
 	getMonthlyBook();
 	searchingLib();
 	searchBooks();
+	// 이전 다음 페이지 버튼 숨기기
 	$('#nextPage').css({ display: 'none' });
 	$('#prevPage').css({ display: 'none' });
-
+	// 도서 검색
 	$('.search').on('click', '#btn', function (e) {
 		$('.search').on('change', '#listCnt', function (e) {
 			numOfRows = e.target.value;
@@ -23,14 +24,14 @@ $(function () {
 		// numOfRows = 10;
 
 		// console.log('1');
-
+		// 이전 다음 페이지 버튼 보이기
 		searchBooks(search, pageNo, numOfRows);
 		$('#nextPage').css({ display: 'inline-block' });
 		$('#prevPage').css({ display: 'inline-block' });
 
 		// console.log(numOfRows);
 	});
-
+	// 다음페이지
 	$('#nextPage').click(function () {
 		if (numOfRows != 0) {
 			if (totalCount % numOfRows == 0) {
@@ -51,7 +52,7 @@ $(function () {
 			$(this).attr('disabled', true);
 		}
 	});
-
+	// 이전 페이지
 	$('#prevPage').click(function () {
 		if (numOfRows != 0) {
 			if (totalCount % numOfRows == 0) {
@@ -71,32 +72,74 @@ $(function () {
 			$(this).css('disabled', true);
 		}
 	});
-
+	// 지역별 도서관 검색
 	$('#district').change(function (e) {
 		// console.log($('#seoulLibrary'));
 		searchingLib();
 	});
-
+	// 도서관 목록 열기 닫기
 	$('.faq').on('click', '.faq-item', function () {
 		$(this).toggleClass('faq-active');
-		// map.relayout();
-		// openModal($(this).attr('lat'), $(this).attr('lon'));
-		// console.log($(this).attr('lat'));
 	});
-
+	// 좋아요 동작
 	$('.like').on('click', '.fa-regular', function (e) {
 		console.log('1');
 		$(this).toggleClass('fa-solid');
 	});
-
+	// 모달창 열기
 	$('.bookSearchResult').on('click', '.title', function (e) {
 		openModal(this.id);
 		console.log(this.id);
 	});
-
+	// 모달창 닫기
 	$('.bookSearchResult').on('click', '.closeArea', function (e) {
 		closeModal(this.id);
 		console.log(this.id);
+	});
+	// 카카오톡 피드 공유하기
+	$('.shareBtn').on('click', function (e) {
+		console.log('1');
+		window.navigator.share({
+			title: '오늘도 책을 읽지 않는 당신에게...', // 공유될 제목
+			text: '자신도 읽지 않는 책을 궂이 남에게 권하는 모순적인 페이지!', // 공유될 설명
+			url: '', // 공유될 URL
+		});
+	});
+	Kakao.Share.createDefaultButton({
+		container: '#kakaotalk-sharing-btn',
+		objectType: 'feed',
+		content: {
+			title: $('#pageName').html(),
+			description: $('.mb-0').html(),
+			imageUrl:
+				'http://k.kakaocdn.net/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
+			link: {
+				// [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
+				mobileWebUrl: location.href,
+				webUrl: location.href,
+			},
+		},
+		social: {
+			likeCount: 286,
+			commentCount: 45,
+			sharedCount: 845,
+		},
+		buttons: [
+			{
+				title: '웹으로 보기',
+				link: {
+					mobileWebUrl: location.href,
+					webUrl: location.href,
+				},
+			},
+			{
+				title: '앱으로 보기',
+				link: {
+					mobileWebUrl: location.href,
+					webUrl: location.href,
+				},
+			},
+		],
 	});
 });
 
@@ -155,12 +198,6 @@ function searchBooks(input) {
 	});
 }
 
-// function parsingBookData(json) {
-// 	let items = json.documents;
-
-// 	$.each(items, function (index, item) {});
-// }
-
 let searchOutput = '';
 function printBookData(json) {
 	totalCount = Number(json.meta.total_count);
@@ -195,12 +232,15 @@ function printBookData(json) {
 
 		searchOutput += `</div></div></article>`;
 		searchOutput += `<div class="modal-content" id='${index}'><h2>${item.title}</h2>`;
-		searchOutput += `<p>${item.contents}<p>`;
-		searchOutput += `<p>출판사 : ${item.publisher}<p>`;
-		searchOutput += `<p>저자 : ${item.authors}<p>`;
+		searchOutput += `<p>${item.contents}</p>`;
+		searchOutput += `<p>출판사 : ${item.publisher}</p>`;
+		searchOutput += `<p>저자 : ${item.authors}</p>`;
+
 		if (item.translators != '') {
-			searchOutput += `<p>역자 : ${item.translators}<p>`;
+			searchOutput += `<p>역자 : ${item.translators}</p>`;
 		}
+
+		searchOutput += `<p><a target="_blank" href="${item.url}">더보기</a></p>`;
 		searchOutput += `<div class="closeArea" id="${index}"><span><b>닫기</b></span></div></div></div>`;
 	});
 	searchOutput += `</div>`;
@@ -231,7 +271,7 @@ function delCookie(name, val) {
 	let cookie = name + '=' + val + ';expires=' + now.toUTCString();
 	document.cookie = cookie;
 }
-
+//쿠키를 읽어와 해당 내용이 있는지 없는지를 확인하는 함수
 let cookName = [];
 function getCookie(name) {
 	if (document.cookie != '') {
@@ -300,29 +340,28 @@ function parsingLibData(json) {
 			output += `<i class="faq-toggle bi bi-chevron-right"></i></div>`;
 			// outputMap(lat, lon);
 		}
-
 	});
 	output += `</div>`;
 	$('#bookSe').html(output);
-	// kakao Map API로 지도를 그리기
-
 }
 
-function outputMap(lat, lon) {
-	var staticMapContainer  = document.getElementById('staticMap'), // 이미지 지도를 표시할 div  
-	staticMapOption = { 
-			center: new kakao.maps.LatLng(lat, lon), // 이미지 지도의 중심좌표
-			level: 3 // 이미지 지도의 확대 레벨
-	};
+// function outputMap(lat, lon) {
+// 	var staticMapContainer = document.getElementById('staticMap'), // 이미지 지도를 표시할 div
+// 		staticMapOption = {
+// 			center: new kakao.maps.LatLng(lat, lon), // 이미지 지도의 중심좌표
+// 			level: 3, // 이미지 지도의 확대 레벨
+// 		};
 
-// 이미지 지도를 표시할 div와 옵션으로 이미지 지도를 생성합니다
-var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
-}
+// 	// 이미지 지도를 표시할 div와 옵션으로 이미지 지도를 생성합니다
+// 	var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+// }
 
+// 모달 창 띄우기
 function openModal(num) {
 	// alert("!");
 	document.getElementsByClassName('modal-content')[Number(num)].style.display = 'block';
 }
+// 모달 창 닫기
 function closeModal(num) {
 	document.getElementsByClassName('modal-content')[Number(num)].style.display = 'none';
 }
