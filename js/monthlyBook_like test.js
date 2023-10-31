@@ -296,34 +296,28 @@ function parsingLibData(json) {
 			<p>주 소 : ${libraryAddr}</p>
 			<p>전화번호 : ${libraryTel}</p>
 			<p>운영시간 : ${operation} / 휴무일 : ${holiday}</p></div>`;
+			// output += `<div id="staticMap" style="width:600px;height:350px;"></div>`;
 			output += `<i class="faq-toggle bi bi-chevron-right"></i></div>`;
+			// outputMap(lat, lon);
 		}
+
 	});
 	output += `</div>`;
 	$('#bookSe').html(output);
 	// kakao Map API로 지도를 그리기
+
 }
 
-// function outputMap(lat, lon) {
-// 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-// 		mapOption = {
-// 			center: new kakao.maps.LatLng(lat, lon), // 지도의 중심좌표
-// 			level: 2, // 지도의 확대 레벨
-// 		};
+function outputMap(lat, lon) {
+	var staticMapContainer  = document.getElementById('staticMap'), // 이미지 지도를 표시할 div  
+	staticMapOption = { 
+			center: new kakao.maps.LatLng(lat, lon), // 이미지 지도의 중심좌표
+			level: 3 // 이미지 지도의 확대 레벨
+	};
 
-// 	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-
-// 	// 마커가 표시될 위치입니다
-// 	var markerPosition = new kakao.maps.LatLng(lat, lon);
-
-// 	// 마커를 생성합니다
-// 	var marker = new kakao.maps.Marker({
-// 		position: markerPosition,
-// 	});
-
-// 	// 마커가 지도 위에 표시되도록 설정합니다
-// 	marker.setMap(map);
-// }
+// 이미지 지도를 표시할 div와 옵션으로 이미지 지도를 생성합니다
+var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+}
 
 function openModal(num) {
 	// alert("!");
