@@ -97,14 +97,7 @@ $(function () {
 		console.log(this.id);
 	});
 	// 카카오톡 피드 공유하기
-	$('.shareBtn').on('click', function (e) {
-		console.log('1');
-		window.navigator.share({
-			title: '오늘도 책을 읽지 않는 당신에게...', // 공유될 제목
-			text: '자신도 읽지 않는 책을 궂이 남에게 권하는 모순적인 페이지!', // 공유될 설명
-			url: '', // 공유될 URL
-		});
-	});
+
 	Kakao.Share.createDefaultButton({
 		container: '#kakaotalk-sharing-btn',
 		objectType: 'feed',
@@ -141,6 +134,11 @@ $(function () {
 			},
 		],
 	});
+});
+
+// 도서관 위치 정보 전송 받아 지도 팝업 띄우기
+$(function () {
+	outputMap();
 });
 
 // 이달의 도서 자료 가져오기
@@ -186,7 +184,7 @@ function parsingMontylyBookData(xml) {
 function searchBooks(input) {
 	$.ajax({
 		method: 'GET',
-		url: `https://dapi.kakao.com/v3/search/book?target=title&page=${pageNo}&size=${numOfRows}&`,
+		url: `https://dapi.kakao.com/v3/search/book?page=${pageNo}&size=${numOfRows}&`,
 		data: {
 			query: input,
 		},
@@ -331,30 +329,22 @@ function parsingLibData(json) {
 
 		// list 출력하기
 		if ($('#district').val() == district) {
-			output += `<div class="faq-item" width="100%"><h3><span class="num" >${libraryName}</span></h3>`;
+			output += `<div class="faq-item" width="100%">`;
+			output += `<h3><span class="num" >${libraryName}</span></h3>`;
 			output += `<div class="faq-content">
-			<p>주 소 : ${libraryAddr}</p>
+			<p>주 소 : ${libraryAddr} <a href="libraryMap.html?lat=${lat}&lon=${lon}" onclick="open(
+						this.href,
+						'_blank',
+						'top = 30%, left = 30%, width = 600px, height = 600px'
+					); return false;"><span>위치확인</span></a></p>
 			<p>전화번호 : ${libraryTel}</p>
 			<p>운영시간 : ${operation} / 휴무일 : ${holiday}</p></div>`;
-			// output += `<div id="staticMap" style="width:600px;height:350px;"></div>`;
 			output += `<i class="faq-toggle bi bi-chevron-right"></i></div>`;
-			// outputMap(lat, lon);
 		}
 	});
 	output += `</div>`;
 	$('#bookSe').html(output);
 }
-
-// function outputMap(lat, lon) {
-// 	var staticMapContainer = document.getElementById('staticMap'), // 이미지 지도를 표시할 div
-// 		staticMapOption = {
-// 			center: new kakao.maps.LatLng(lat, lon), // 이미지 지도의 중심좌표
-// 			level: 3, // 이미지 지도의 확대 레벨
-// 		};
-
-// 	// 이미지 지도를 표시할 div와 옵션으로 이미지 지도를 생성합니다
-// 	var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
-// }
 
 // 모달 창 띄우기
 function openModal(num) {
@@ -364,4 +354,47 @@ function openModal(num) {
 // 모달 창 닫기
 function closeModal(num) {
 	document.getElementsByClassName('modal-content')[Number(num)].style.display = 'none';
+}
+
+// 지도 띄우는 함수
+function outputMap() {
+	getParameter();
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+		mapOption = {
+			center: new kakao.maps.LatLng(lat, lon), // 지도의 중심좌표
+			level: 4, // 지도의 확대 레벨
+		};
+
+	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+	// 마커가 표시될 위치입니다
+	var markerPosition = new kakao.maps.LatLng(lat, lon);
+
+	// 마커를 생성합니다
+	var marker = new kakao.maps.Marker({
+		position: markerPosition,
+	});
+
+	// 마커가 지도 위에 표시되도록 설정합니다
+	marker.setMap(map);
+
+	// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+	// marker.setMap(null);
+}
+// url에서 매개 변수 값 추출하는 함수
+function getParameter() {
+	let url = location.href;
+
+	if (url.indexOf('?') != -1) {
+		let queryString = url.split('?')[1];
+		let queryArr = queryString.split('&');
+
+		console.log(queryArr);
+		$.each(queryArr, function (index, point) {
+			lon = queryArr[0].split('=')[1];
+			lat = queryArr[1].split('=')[1];
+			// lon = point.split('=');
+		});
+		console.log(lat, lon);
+	}
 }
