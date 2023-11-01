@@ -28,43 +28,8 @@ $(function () {
 		searchBooks(search, pageNo, numOfRows);
 		$('#nextPage').css({ display: 'inline-block' });
 		$('#prevPage').css({ display: 'inline-block' });
-		Kakao.Share.createDefaultButton({
-			container: '#kakaotalk-sharing-btn',
-			objectType: 'feed',
-			content: {
-				title: $('#pageName').html(),
-				description: $('.mb-0').html(),
-				imageUrl:
-					'http://k.kakaocdn.net/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
-				link: {
-					// [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
-					mobileWebUrl: location.href,
-					webUrl: location.href,
-				},
-			},
-			social: {
-				likeCount: 286,
-				commentCount: 45,
-				sharedCount: 845,
-			},
-			buttons: [
-				{
-					title: '웹으로 보기',
-					link: {
-						mobileWebUrl: location.href,
-						webUrl: location.href,
-					},
-				},
-				{
-					title: '앱으로 보기',
-					link: {
-						mobileWebUrl: location.href,
-						webUrl: location.href,
-					},
-				},
-			],
-		});
 		// console.log(numOfRows);
+		
 	});
 	// 다음페이지
 	$('#nextPage').click(function () {
@@ -83,6 +48,7 @@ $(function () {
 			pageNo++;
 			search = $('input').val();
 			searchBooks(search, pageNo, numOfRows);
+			// shareBooksKakao(this.name);
 		} else if (pageNo == totalPages) {
 			$(this).attr('disabled', true);
 		}
@@ -103,6 +69,7 @@ $(function () {
 			pageNo--;
 			search = $('input').val();
 			searchBooks(search, pageNo, numOfRows);
+			// shareBooksKakao(this.name);
 		} else if (pageNo == 1) {
 			$(this).css('disabled', true);
 		}
@@ -133,7 +100,7 @@ $(function () {
 	});
 	// 카카오톡 피드 공유하기
 	Kakao.Share.createDefaultButton({
-		container: '.kakaotalk-sharing-btn',
+		container: '#kakaotalk-sharing-btn',
 		objectType: 'feed',
 		content: {
 			title: $('#pageName').html(),
@@ -145,11 +112,6 @@ $(function () {
 				mobileWebUrl: location.href,
 				webUrl: location.href,
 			},
-		},
-		social: {
-			likeCount: 286,
-			commentCount: 45,
-			sharedCount: 845,
 		},
 		buttons: [
 			{
@@ -168,11 +130,11 @@ $(function () {
 			},
 		],
 	});
-});
 
-// 도서관 위치 정보 전송 받아 지도 팝업 띄우기
-$(function () {
-	outputMap();
+
+
+
+
 });
 
 // 이달의 도서 자료 가져오기
@@ -204,15 +166,24 @@ function parsingMontylyBookData(xml) {
 		imgLink = $(book).children().eq(14).text().replaceAll('www', 'e');
 		link = $(book).children().eq(17).text();
 
+		// monthlyoutput(title, auther, imgLink)
 		output += `<div class="col-xl-4 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
-								<article><div class="post-img"><img src="${imgLink}" class="img-fluid" width="400px"></div>`;
+		<article><div class="post-img"><img src="${imgLink}" class="img-fluid" width="400px"></div>`;
 		output += `<h2 class="title">${title}</h2><div class="d-flex align-items-center"><div class="post-meta">
-								<p class="post-author">${auther}</p>`;
+		<p class="post-author">${auther}</p>`;
 		output += `</div></div></article></div>`;
 	});
 	output += `</div>`;
 	$('.monthlyBook').html(output);
 }
+
+// function monthlyoutput(title, auther, thumnail) {
+// 	output += `<div class="col-xl-4 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+// 	<article><div class="post-img"><img src="${thumnail}" class="img-fluid" width="400px"></div>`;
+// 	output += `<h2 class="title">${title}</h2><div class="d-flex align-items-center"><div class="post-meta">
+// 	<p class="post-author">${auther}</p>`;
+// 	output += `</div></div></article></div>`;
+// }
 
 // 카카오 도서 검색 자료 가져오기
 function searchBooks(input) {
@@ -234,8 +205,10 @@ let searchOutput = '';
 function printBookData(json) {
 	totalCount = Number(json.meta.total_count);
 	let items = json.documents;
+	// let title = json.documents.title;
+	// let thumbnail = json.documents.thumbnail;
+	// let contents = json.documents.contents;
 	searchOutput = `<div class="row gy-4">`;
-
 	$.each(items, function (index, item) {
 		searchOutput += `<div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="100"><article>`;
 
@@ -256,33 +229,66 @@ function printBookData(json) {
 
 		searchOutput += `<p>${item.price}원</p>`;
 
+		searchOutput += `<div><a id="kakao-share" href="javascript:;" name="${item.title}">
+					<img
+						src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+						alt="카카오톡 공유 보내기 버튼" />
+				</a></div>`;
+
 		if (!getCookie(item.isbn)) {
 			searchOutput += `<div class="like"><i class="fa-regular fa-bookmark" id="${item.isbn}"></i></div>`;
 		} else {
 			searchOutput += `<div class="like"><i class="fa-regular fa-solid fa-bookmark" id="${item.isbn}"></i></div>`;
 		}
 
-		searchOutput += `<a id="kakaotalk-sharing-btn" href="javascript:;">
-					<img
-						src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
-						alt="카카오톡 공유 보내기 버튼" />
-				</a>`;
-
 		searchOutput += `</div></div></article>`;
 		searchOutput += `<div class="modal-content" id='${index}'><h2>${item.title}</h2>`;
 		searchOutput += `<p>${item.contents}</p>`;
 		searchOutput += `<p>출판사 : ${item.publisher}</p>`;
 		searchOutput += `<p>저자 : ${item.authors}</p>`;
-
+		
 		if (item.translators != '') {
 			searchOutput += `<p>역자 : ${item.translators}</p>`;
 		}
 
 		searchOutput += `<p><a target="_blank" href="${item.url}">더보기</a></p>`;
 		searchOutput += `<div class="closeArea" id="${index}"><span><b>닫기</b></span></div></div></div>`;
+		
 	});
 	searchOutput += `</div>`;
 	$('.bookSearchResult').html(searchOutput);
+
+	Kakao.Share.createDefaultButton({
+		container: "#kakao-share",	
+		objectType: 'feed',
+		content: {
+			title: "title",
+			description: "contents",
+			imageUrl: "thumbnail",
+			link: {
+				// [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
+				mobileWebUrl: location.href,
+				webUrl: location.href,
+			},
+		},
+		buttons: [
+			{
+				title: '웹으로 보기',
+				link: {
+					mobileWebUrl: location.href,
+					webUrl: location.href,
+				},
+			},
+			{
+				title: '앱으로 보기',
+				link: {
+					mobileWebUrl: location.href,
+					webUrl: location.href,
+				},
+			},
+		],
+	});
+
 	$('.like').on('click', '.fa-bookmark', function (e) {
 		if (!getCookie(this.id)) {
 			saveCookie(this.id, `BookMark${this.id}`, 30);
@@ -292,6 +298,7 @@ function printBookData(json) {
 			$(this).toggleClass('fa-solid');
 		}
 	});
+
 }
 
 // 쿠키 관련 함수
@@ -394,47 +401,4 @@ function openModal(num) {
 // 모달 창 닫기
 function closeModal(num) {
 	document.getElementsByClassName('modal-content')[Number(num)].style.display = 'none';
-}
-
-// 지도 띄우는 함수
-function outputMap() {
-	getParameter();
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-		mapOption = {
-			center: new kakao.maps.LatLng(lat, lon), // 지도의 중심좌표
-			level: 4, // 지도의 확대 레벨
-		};
-
-	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-
-	// 마커가 표시될 위치입니다
-	var markerPosition = new kakao.maps.LatLng(lat, lon);
-
-	// 마커를 생성합니다
-	var marker = new kakao.maps.Marker({
-		position: markerPosition,
-	});
-
-	// 마커가 지도 위에 표시되도록 설정합니다
-	marker.setMap(map);
-
-	// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
-	// marker.setMap(null);
-}
-// url에서 매개 변수 값 추출하는 함수
-function getParameter() {
-	let url = location.href;
-
-	if (url.indexOf('?') != -1) {
-		let queryString = url.split('?')[1];
-		let queryArr = queryString.split('&');
-
-		console.log(queryArr);
-		$.each(queryArr, function (index, point) {
-			lon = queryArr[0].split('=')[1];
-			lat = queryArr[1].split('=')[1];
-			// lon = point.split('=');
-		});
-		console.log(lat, lon);
-	}
 }
