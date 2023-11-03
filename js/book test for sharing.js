@@ -10,6 +10,7 @@ $(function () {
 	getMonthlyBook();
 	searchingLib();
 	searchBooks();
+	bookMarkList();
 	// 이전 다음 페이지 버튼 숨기기
 	$('#nextPage').css({ display: 'none' });
 	$('#prevPage').css({ display: 'none' });
@@ -64,12 +65,12 @@ $(function () {
 			numOfRows = 10;
 		}
 
-		if (pageNo < totalPages) {
+		if (pageNo <= totalPages) {
 			pageNo--;
 			search = $('input').val();
 			searchBooks(search, pageNo, numOfRows);
 			// shareBooksKakao(this.name);
-		} else if (pageNo <= 1) {
+		} else if (pageNo < 0) {
 			$(this).css('disabled', true);
 		}
 	});
@@ -84,7 +85,7 @@ $(function () {
 	});
 	// 좋아요 동작
 	$('.like').on('click', '.fa-regular', function (e) {
-		console.log('1');
+		// console.log('1');
 		$(this).toggleClass('fa-solid');
 	});
 	// 모달창 열기
@@ -100,10 +101,12 @@ $(function () {
 
 	// 찜 모달창 열기
 	$('#like-modal-btn').click(function (e) {
+		$('#likeList').html('');
 		bookMarkList();
 	});
-	// 찜 모달창 닫기
+	// 찜 목록 닫기
 	$('#likeList').click(function (e) {
+		$('#likeList').html('');
 		$('#likeList').css({ display: 'none' });
 		// 	console.log(this.id);
 	});
@@ -219,36 +222,6 @@ function searchBooks(input) {
 		},
 	}).done(function (data) {
 		printBookData(data);
-		// Kakao.Share.createDefaultButton({
-		// 		container: '.kakao-share',
-		// 		objectType: 'feed',
-		// 		content: {
-		// 			title: 'title',
-		// 			description: 'contents',
-		// 			imageUrl: 'thumbnail',
-		// 			link: {
-		// 				// [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
-		// 				mobileWebUrl: location.href,
-		// 				webUrl: location.href,
-		// 			},
-		// 		},
-		// 		buttons: [
-		// 			{
-		// 				title: '웹으로 보기',
-		// 				link: {
-		// 					mobileWebUrl: location.href,
-		// 					webUrl: location.href,
-		// 				},
-		// 			},
-		// 			{
-		// 				title: '앱으로 보기',
-		// 				link: {
-		// 					mobileWebUrl: location.href,
-		// 					webUrl: location.href,
-		// 				},
-		// 			},
-		// 		],
-		// 	});
 	});
 }
 
@@ -279,12 +252,6 @@ function printBookData(json) {
 		}
 
 		searchOutput += `<p>${item.price}원</p>`;
-
-		// searchOutput += `<div class="kakao-share"><a href="javascript:;" name="${item.title}">
-		// 			<img
-		// 				src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
-		// 				alt="카카오톡 공유 보내기 버튼" />
-		// 		</a></div>`;
 
 		if (!getCookie(item.title)) {
 			searchOutput += `<div class="like"><i class="fa-regular fa-bookmark" id="${item.title}"></i></div>`;
@@ -319,6 +286,7 @@ function printBookData(json) {
 	});
 }
 
+// 쿠키 북마크 내용 출력
 function bookMarkList() {
 	let cookies = document.cookie;
 	let cookieArr = cookies.split('; ');
@@ -429,12 +397,3 @@ function openModal(num) {
 function closeModal(num) {
 	document.getElementsByClassName('modal-content')[Number(num)].style.display = 'none';
 }
-
-// // 찜 목록 모달 창 띄우기
-// function openLikeModal(num) {
-// 	document.getElementById('likeList')[num].style.display = 'block';
-// }
-// // 찜 목록 모달 창 닫기
-// function closeLikeModal(num) {
-// 	document.getElementById('likeList')[num].style.display = 'block';
-// }

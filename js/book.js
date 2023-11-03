@@ -10,6 +10,7 @@ $(function () {
 	getMonthlyBook();
 	searchingLib();
 	searchBooks();
+	bookMarkList();
 	// 이전 다음 페이지 버튼 숨기기
 	$('#nextPage').css({ display: 'none' });
 	$('#prevPage').css({ display: 'none' });
@@ -83,19 +84,31 @@ $(function () {
 	});
 	// 좋아요 동작
 	$('.like').on('click', '.fa-regular', function (e) {
-		console.log('1');
+		// console.log('1');
 		$(this).toggleClass('fa-solid');
 	});
 	// 모달창 열기
 	$('.bookSearchResult').on('click', '.title', function (e) {
 		openModal(this.id);
-		console.log(this.id);
+		// console.log(this.id);
 	});
 	// 모달창 닫기
 	$('.bookSearchResult').on('click', '.closeArea', function (e) {
 		closeModal(this.id);
-		console.log(this.id);
+		// console.log(this.id);
 	});
+	// 찜 목록 열기
+	$('#like-modal-btn').click(function (e) {
+		$('#likeList').html('');
+		bookMarkList();
+	});
+	// 찜 목록 닫기
+	$('#likeList').click(function (e) {
+		$('#likeList').html('');
+		$('#likeList').css({ display: 'none' });
+		// 	console.log(this.id);
+	});
+
 	// 카카오톡 피드 공유하기
 
 	Kakao.Share.createDefaultButton({
@@ -111,11 +124,6 @@ $(function () {
 				mobileWebUrl: location.href,
 				webUrl: location.href,
 			},
-		},
-		social: {
-			likeCount: 286,
-			commentCount: 45,
-			sharedCount: 845,
 		},
 		buttons: [
 			{
@@ -134,11 +142,6 @@ $(function () {
 			},
 		],
 	});
-});
-
-// 도서관 위치 정보 전송 받아 지도 팝업 띄우기
-$(function () {
-	outputMap();
 });
 
 // 이달의 도서 자료 가져오기
@@ -222,10 +225,10 @@ function printBookData(json) {
 
 		searchOutput += `<p>${item.price}원</p>`;
 
-		if (!getCookie(item.isbn)) {
-			searchOutput += `<div class="like"><i class="fa-regular fa-bookmark" id="${item.isbn}"></i></div>`;
+		if (!getCookie(item.title)) {
+			searchOutput += `<div class="like"><i class="fa-regular fa-bookmark" id="${item.title}"></i></div>`;
 		} else {
-			searchOutput += `<div class="like"><i class="fa-regular fa-solid fa-bookmark" id="${item.isbn}"></i></div>`;
+			searchOutput += `<div class="like"><i class="fa-regular fa-solid fa-bookmark" id="${item.title}"></i></div>`;
 		}
 
 		searchOutput += `</div></div></article>`;
@@ -243,15 +246,27 @@ function printBookData(json) {
 	});
 	searchOutput += `</div>`;
 	$('.bookSearchResult').html(searchOutput);
+
 	$('.like').on('click', '.fa-bookmark', function (e) {
 		if (!getCookie(this.id)) {
-			saveCookie(this.id, `BookMark${this.id}`, 30);
+			saveCookie(this.id, `BookMark`, 10);
 			$(this).toggleClass('fa-solid');
 		} else {
-			delCookie(this.id, `BookMark${this.id}`);
+			delCookie(this.id, `BookMark`);
 			$(this).toggleClass('fa-solid');
 		}
 	});
+}
+// 쿠키 북마크 내용 출력
+function bookMarkList() {
+	let cookies = document.cookie;
+	let cookieArr = cookies.split('; ');
+	$.each(cookieArr, function (index, cookie) {
+		let title = cookieArr[index].split('=')[0];
+		// console.log(title);
+		$('#likeList').append(`<div>${title}</div>`);
+	});
+	$('#likeList').css({ display: 'block' });
 }
 
 // 쿠키 관련 함수
@@ -274,19 +289,16 @@ let cookName = [];
 function getCookie(name) {
 	if (document.cookie != '') {
 		let cookArr = document.cookie.split('; ');
-		console.log(cookArr);
-		console.log(document.cookie);
+		// console.log(cookArr);
+		// console.log(document.cookie);
 		$.each(cookArr, function (index, cookie) {
-			cookName[index] = `${cookie.replace(`=BookMark${name}`, '')}`;
+			cookName[index] = `${cookie.replace(`=BookMark`, '')}`;
 		});
 		for (let i in cookName) {
-			console.log(cookName[i].indexOf(name), name);
-			if (cookName[i].indexOf(name) > -1) {
+			if (cookName[i] == name) {
 				return true;
 			}
 		}
-	} else {
-		return false;
 	}
 }
 
@@ -354,47 +366,4 @@ function openModal(num) {
 // 모달 창 닫기
 function closeModal(num) {
 	document.getElementsByClassName('modal-content')[Number(num)].style.display = 'none';
-}
-
-// 지도 띄우는 함수
-function outputMap() {
-	getParameter();
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-		mapOption = {
-			center: new kakao.maps.LatLng(lat, lon), // 지도의 중심좌표
-			level: 4, // 지도의 확대 레벨
-		};
-
-	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-
-	// 마커가 표시될 위치입니다
-	var markerPosition = new kakao.maps.LatLng(lat, lon);
-
-	// 마커를 생성합니다
-	var marker = new kakao.maps.Marker({
-		position: markerPosition,
-	});
-
-	// 마커가 지도 위에 표시되도록 설정합니다
-	marker.setMap(map);
-
-	// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
-	// marker.setMap(null);
-}
-// url에서 매개 변수 값 추출하는 함수
-function getParameter() {
-	let url = location.href;
-
-	if (url.indexOf('?') != -1) {
-		let queryString = url.split('?')[1];
-		let queryArr = queryString.split('&');
-
-		console.log(queryArr);
-		$.each(queryArr, function (index, point) {
-			lon = queryArr[0].split('=')[1];
-			lat = queryArr[1].split('=')[1];
-			// lon = point.split('=');
-		});
-		console.log(lat, lon);
-	}
 }
