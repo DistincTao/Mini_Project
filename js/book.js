@@ -29,9 +29,23 @@ $(function () {
 		searchBooks(search, pageNo, numOfRows);
 		$('#nextPage').css({ display: 'inline-block' });
 		$('#prevPage').css({ display: 'inline-block' });
-
-		// console.log(numOfRows);
 	});
+
+	// 도서 검색
+	$('.search').on('change', '#searchInput', function (e) {
+		$('.search').on('change', '#listCnt', function (e) {
+			numOfRows = e.target.value;
+		});
+		// console.log('1');
+		search = $('input').val();
+		pageNo = 1;
+
+		// 이전 다음 페이지 버튼 보이기
+		searchBooks(search, pageNo, numOfRows);
+		$('#nextPage').css({ display: 'inline-block' });
+		$('#prevPage').css({ display: 'inline-block' });
+	});
+
 	// 다음페이지
 	$('#nextPage').click(function () {
 		if (numOfRows != 0) {
@@ -101,24 +115,23 @@ $(function () {
 	$('#like-modal-btn').click(function (e) {
 		$('#likeList').html('');
 		bookMarkList();
+		$('.likeList').css({ display: 'block' });
 	});
 	// 찜 목록 닫기
-	$('#likeList').click(function (e) {
+	$('#closeBookMrk').click(function (e) {
 		$('#likeList').html('');
-		$('#likeList').css({ display: 'none' });
+		$('.likeList').css({ display: 'none' });
 		// 	console.log(this.id);
 	});
 
 	// 카카오톡 피드 공유하기
-
 	Kakao.Share.createDefaultButton({
 		container: '#kakaotalk-sharing-btn',
 		objectType: 'feed',
 		content: {
 			title: $('#pageName').html(),
 			description: $('.mb-0').html(),
-			imageUrl:
-				'http://k.kakaocdn.net/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
+			imageUrl: 'http://goott351.cafe24.com/assets/img/clients/client-5.png',
 			link: {
 				// [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
 				mobileWebUrl: location.href,
@@ -261,12 +274,16 @@ function printBookData(json) {
 function bookMarkList() {
 	let cookies = document.cookie;
 	let cookieArr = cookies.split('; ');
+	console.log(cookieArr);
 	$.each(cookieArr, function (index, cookie) {
 		let title = cookieArr[index].split('=')[0];
-		// console.log(title);
-		$('#likeList').append(`<div>${title}</div>`);
+		let value = cookieArr[index].split('=')[1];
+		console.log(title, value, cookie);
+		if (value == 'BookMark') {
+			$('#likeList').append(`<div>${title}</div>`);
+		}
 	});
-	$('#likeList').css({ display: 'block' });
+	// $('.likeList').css({ display: 'block' });
 }
 
 // 쿠키 관련 함수

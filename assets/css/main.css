@@ -12,17 +12,6 @@
 --------------------------------------------------------------*/
 /* Fonts */
 /* ???∞Î¶¨Í∞Ä ?¨Ïö©???∞Ìä∏ */
-.main_title {
-  font-family: "SUITE-Regular";
-  /* °⁄ øÏ∏Æ∆˘∆Æ */
-  font-size: 48px;
-  font-weight: bold;
-  margin: 0 auto;
-  color: #000;
-}
-.nav_title {
-  padding-left: 50px;
-}
 @font-face {
   font-family: "ONE-Mobile-POP";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff")
@@ -45,6 +34,55 @@
   font-style: normal;
 }
 /* ?∞Î¶¨Í∞Ä Ï∂îÍ???style */
+.team .member .member-img .img-fluid {
+  max-width: 100%;
+  height: 248px;
+  width: 248px;
+  object-fit: cover;
+}
+.kakaoIcon {
+  width: 30px;
+  height: 30px;
+  filter: grayscale(100%);
+}
+.kakaoIcon:hover {
+  filter: grayscale(0);
+}
+#map {
+  /* width: 100%;
+  height: 100%; */
+}
+::selection {
+  background: #ff6f43;
+  color: #fff;
+}
+/* .borderBottom {
+  border-bottom: 4px solid #ff6f43;
+  width: fit-content;
+  margin: 0 auto 20px;
+  padding-bottom: 8px;
+} */
+
+#prevBtn {
+  /* color: var(--contrast-color);
+  background: var(--primary-color); */
+  font-size: 14px;
+  padding: 8px 26px;
+  margin: 0;
+  border-radius: 4px;
+  transition: 0.3s;
+  border: none;
+}
+#nextBtn {
+  /* color: var(--contrast-color);
+  background: var(--primary-color); */
+  font-size: 14px;
+  padding: 8px 26px;
+  margin: 0;
+  border-radius: 4px;
+  transition: 0.3s;
+  border: none;
+}
 .main_title {
   font-family: "SUITE-Regular";
   /* ???∞Î¶¨?∞Ìä∏ */
@@ -144,17 +182,22 @@ section {
   font-size: 32px;
   font-weight: 700;
   position: relative;
+  /* ?ÑÎûò Ï∂îÍ????çÏÑ± */
+  border-bottom: 5px solid #ff6f43;
+  width: fit-content;
+  margin: 0 auto 20px;
+  padding-bottom: 8px;
 }
 
 .section-title h2:before,
 .section-title h2:after {
-  content: "";
+  /* content: ""; */
   /* ???∞Î¶¨Í∞Ä Î≥ÄÍ≤ΩÌïú ?çÏÑ± start */
-  width: 20px;
-  height: 5px;
+  /* width: 20px; */
+  /* height: 5px; */
   /* ???∞Î¶¨Í∞Ä Î≥ÄÍ≤ΩÌïú ?çÏÑ± end */
-  background: var(--primary-color);
-  display: inline-block;
+  /* background: var(--primary-color); */
+  /* display: inline-block; */
 }
 
 .section-title h2:before {
@@ -2657,7 +2700,23 @@ section {
   position: relative;
 }
 
+.blog-details .sidebar .search-form div {
+  background: var(--background-color);
+  border: 1px solid rgba(var(--default-color-rgb), 0.3);
+  padding: 3px 10px;
+  position: relative;
+}
+
 .blog-details .sidebar .search-form form input[type="text"] {
+  border: 0;
+  padding: 4px;
+  border-radius: 4px;
+  width: calc(100% - 40px);
+  background-color: var(--background-color);
+  color: var(--default-color);
+}
+
+.blog-details .sidebar .search-form input[type="text"] {
   border: 0;
   padding: 4px;
   border-radius: 4px;
@@ -2669,8 +2728,27 @@ section {
 .blog-details .sidebar .search-form form input[type="text"]:focus {
   outline: none;
 }
+.blog-details .sidebar .search-form input[type="text"]:focus {
+  outline: none;
+}
 
 .blog-details .sidebar .search-form form button {
+  background: var(--primary-color);
+  color: var(--background-color);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border: 0;
+  font-size: 16px;
+  padding: 0 15px;
+  margin: -1px;
+  transition: 0.3s;
+  border-radius: 0 4px 4px 0;
+  line-height: 0;
+}
+
+.blog-details .sidebar .search-form button {
   background: var(--primary-color);
   color: var(--background-color);
   position: absolute;
@@ -2792,8 +2870,11 @@ section {
 }
 
 .blog-details .blog-author img {
+  width: 120px;
+  height: 120px;
   max-width: 120px;
   margin-right: 20px;
+  min-height: 120px;
 }
 
 .blog-details .blog-author h4 {
@@ -2814,7 +2895,7 @@ section {
 }
 
 .blog-details .blog-author p {
-  font-style: italic;
+  /* font-style: italic; */
   color: rgba(var(--default-color-rgb), 0.7);
   margin-bottom: 0;
 }
@@ -2934,4 +3015,10 @@ section {
 .blog-details .comments .reply-form .btn-primary:hover {
   color: var(--contrast-color);
   background-color: rgba(var(--primary-color-rgb), 0.8);
+}
+
+ .kakaoIcon {
+    width: 30px;
+    height: 30px;
+    filter: grayscale(100%);
 }
