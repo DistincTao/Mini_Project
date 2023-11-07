@@ -65,6 +65,8 @@ $(function () {
 			searchBooks(search, pageNo, numOfRows);
 		} else if (pageNo == totalPages) {
 			$(this).attr('disabled', true);
+		} else {
+			$(this).attr('disabled', false);
 		}
 	});
 	// 이전 페이지
