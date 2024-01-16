@@ -65,8 +65,6 @@ $(function () {
 			searchBooks(search, pageNo, numOfRows);
 		} else if (pageNo == totalPages) {
 			$(this).attr('disabled', true);
-		} else {
-			$(this).attr('disabled', false);
 		}
 	});
 	// 이전 페이지
@@ -241,9 +239,9 @@ function printBookData(json) {
 		searchOutput += `<p>${item.price}원</p>`;
 
 		if (!getCookie(item.title)) {
-			searchOutput += `<div class="like"><i class="fa-regular fa-bookmark" id="${item.title}"></i></div>`;
+			searchOutput += `<div class="like"><i class="fa-regular fa-shake fa-bookmark" id="${item.title}"></i></div>`;
 		} else {
-			searchOutput += `<div class="like"><i class="fa-regular fa-solid fa-bookmark" id="${item.title}"></i></div>`;
+			searchOutput += `<div class="like"><i class="fa-regular fa-solid fa-flip fa-bookmark" id="${item.title}"></i></div>`;
 		}
 
 		searchOutput += `</div></div></article>`;

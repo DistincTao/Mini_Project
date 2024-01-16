@@ -1,966 +1,818 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<head>
+		<meta charset="utf-8" />
+		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>삼삼오오 우리들의 취미생활</title>
-    <meta content="" name="description" />
-    <meta content="" name="keywords" />
+		<title>삼삼오오 우리들의 취미생활</title>
+		<meta content="" name="description" />
+		<meta content="" name="keywords" />
 
-    <!-- Favicons (파비콘) -->
-    <link href="img/favico.ico" rel="icon" />
-    <!-- <link href="img/apple-touch-icon.png" rel="apple-touch-icon"> -->
+		<!-- Favicons (파비콘) -->
+		<link href="img/favico.ico" rel="icon" />
+		<!-- <link href="img/apple-touch-icon.png" rel="apple-touch-icon"> -->
 
-    <!-- jquery library -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<!-- jquery library -->
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-    <!-- 지도 라이브러리 -->
-    <script
-      type="text/javascript"
-      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e9fc4b6d2e46a576969c32f28e3ec079"
-    ></script>
-    <!-- <script
+		<!-- 폰트어썸 -->
+		<script src="https://kit.fontawesome.com/3dfa264fc9.js" crossorigin="anonymous"></script>
+
+		<!-- 지도 라이브러리 -->
+		<script
+			type="text/javascript"
+			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e9fc4b6d2e46a576969c32f28e3ec079"></script>
+		<!-- <script
       type="text/javascript"
       src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e9fc4b6d2e46a576969c32f28e3ec079&libraries=LIBRARY"
     ></script> -->
-    <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
-    <!-- <script
+		<!-- services와 clusterer, drawing 라이브러리 불러오기 -->
+		<!-- <script
       type="text/javascript"
       src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e9fc4b6d2e46a576969c32f28e3ec079&libraries=services,clusterer,drawing"
     ></script> -->
-    <!-- 카카오톡 공유하기 API -->
-    <script
-      src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js"
-      integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH"
-      crossorigin="anonymous"
-    ></script>
-    <script>
-      Kakao.init("49df1a683c8428db37c3a1035538cbfb"); // 사용하려는 앱의 JavaScript 키 입력
-    </script>
+		<!-- 카카오톡 공유하기 API -->
+		<script
+			src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js"
+			integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH"
+			crossorigin="anonymous"></script>
+		<script>
+			Kakao.init('49df1a683c8428db37c3a1035538cbfb'); // 사용하려는 앱의 JavaScript 키 입력
+		</script>
 
-    <!-- Fonts (폰트) -->
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
-      rel="stylesheet"
-    />
+		<!-- Fonts (폰트) -->
+		<link href="https://fonts.googleapis.com" rel="preconnect" />
+		<link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+			rel="stylesheet" />
 
-    <!-- Vendor CSS Files -->
-    <link
-      href="assets/vendor/bootstrap/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-    <link
-      href="assets/vendor/glightbox/css/glightbox.min.css"
-      rel="stylesheet"
-    />
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
-    <link href="assets/vendor/aos/aos.css" rel="stylesheet" />
+		<!-- Vendor CSS Files -->
+		<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+		<link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet" />
+		<link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+		<link href="assets/vendor/aos/aos.css" rel="stylesheet" />
 
-    <!-- Template Main CSS File -->
-    <link href="assets/css/main.css" rel="stylesheet" />
+		<!-- Template Main CSS File -->
+		<link href="assets/css/main.css" rel="stylesheet" />
 
-    <!-- =======================================================
+		<!-- =======================================================
   * Template Name: Append
   * Updated: Sep 18 2023 with Bootstrap v5.3.2
   * Template URL: https://bootstrapmade.com/append-bootstrap-website-template/
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
-  </head>
+	</head>
 
-  <body class="index-page" data-bs-spy="scroll" data-bs-target="#navmenu">
-    <!-- ======= Header ======= -->
-    <header id="header" class="header fixed-top d-flex align-items-center">
-      <div
-        class="container-fluid d-flex align-items-center justify-content-between nav_title"
-      >
-        <!-- ★ 로고 -->
-        <a
-          href="http://goott351.cafe24.com"
-          class="logo d-flex align-items-center me-auto me-xl-0"
-        >
-          <!-- Uncomment the line below if you also wish to use an image logo -->
-          <!-- <img src="assets/img/logo.png" alt=""> -->
-          <h1>삼오일</h1>
-          <span>.</span>
-        </a>
-        <!-- ★ 로고 end -->
+	<body class="index-page" data-bs-spy="scroll" data-bs-target="#navmenu">
+		<!-- ======= Header ======= -->
+		<header id="header" class="header fixed-top d-flex align-items-center">
+			<div class="container-fluid d-flex align-items-center justify-content-between nav_title">
+				<!-- ★ 로고 -->
+				<a href="http://goott351.cafe24.com" class="logo d-flex align-items-center me-auto me-xl-0">
+					<!-- Uncomment the line below if you also wish to use an image logo -->
+					<!-- <img src="assets/img/logo.png" alt=""> -->
+					<h1>삼오일</h1>
+					<span>.</span>
+				</a>
+				<!-- ★ 로고 end -->
 
-        <!-- ★ 메인 네비게이션바 메뉴 nav menu -->
-        <nav id="navmenu" class="navmenu">
-          <ul>
-            <li><a href="http://goott351.cafe24.com" class="active">홈</a></li>
-            <!-- <li><a href="index.html#about">About</a></li> -->
-            <li><a href="index.html#team">팀 소개</a></li>
-            <li><a href="index.html#recent-posts">취미 모아보기</a></li>
-            <li><a href="index.html#testimonials">느낀점</a></li>
-            <li><a href="index.html#contact">오시는 길</a></li>
-          </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
-        <!-- ★ 메인 네비게이션바 메뉴 nav menu end -->
+				<!-- ★ 메인 네비게이션바 메뉴 nav menu -->
+				<nav id="navmenu" class="navmenu">
+					<ul>
+						<li><a href="http://goott351.cafe24.com" class="active">홈</a></li>
+						<!-- <li><a href="index.html#about">About</a></li> -->
+						<li><a href="index.html#team">팀 소개</a></li>
+						<li><a href="index.html#recent-posts">취미 모아보기</a></li>
+						<li><a href="index.html#testimonials">느낀점</a></li>
+						<li><a href="index.html#contact">오시는 길</a></li>
+					</ul>
+					<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+				</nav>
+				<!-- ★ 메인 네비게이션바 메뉴 nav menu end -->
 
-        <!-- <a class="btn-getstarted" href="#">회원가입</a> -->
-        <div id="signUpContainer">
-          <a href="http://goott351.cafe24.com/login.html">로그인</a
-          >&nbsp;&nbsp;&nbsp;
-          <a href="http://goott351.cafe24.com/signUp/signUp.html">회원가입</a>
-        </div>
-        <script src="http://goott351.cafe24.com/js/mainLoginOn.js"></script>
-        <!-- ★ 우측 상단 참여하기 버튼 -->
-      </div>
-    </header>
-    <!-- End Header -->
+				<!-- <a class="btn-getstarted" href="#">회원가입</a> -->
+				<div id="signUpContainer">
+					<a href="http://goott351.cafe24.com/login.html">로그인</a>&nbsp;&nbsp;&nbsp;
+					<a href="http://goott351.cafe24.com/signUp/signUp.html">회원가입</a>
+				</div>
+				<script src="http://goott351.cafe24.com/js/mainLoginOn.js"></script>
+				<!-- ★ 우측 상단 참여하기 버튼 -->
+			</div>
+		</header>
+		<!-- End Header -->
 
-    <main id="main">
-      <!-- Hero Section - Home Page -->
-      <section id="hero" class="hero">
-        <img src="assets/img/hero-bg.jpg" alt="" data-aos="fade-in" />
+		<main id="main">
+			<!-- Hero Section - Home Page -->
+			<section id="hero" class="hero">
+				<img src="assets/img/hero-bg.jpg" alt="" data-aos="fade-in" />
 
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-10 main_title">
-              <h2 data-aos="fade-up" data-aos-delay="100"></h2>
-              <p data-aos="fade-up" data-aos-delay="200">
-                삼삼오오<br />
-                취향으로 만나는 일상
-              </p>
-            </div>
-            <!-- <div class="col-lg-5">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-10 main_title">
+							<h2 data-aos="fade-up" data-aos-delay="100"></h2>
+							<p style="color: #fff" data-aos="fade-up" data-aos-delay="200">
+								삼삼오오<br />
+								취향으로 만나는 일상
+							</p>
+						</div>
+						<!-- <div class="col-lg-5">
             <form action="#" class="sign-up-form d-flex" data-aos="fade-up" data-aos-delay="300">
               <input type="text" class="form-control" placeholder="Enter email address">
               <input type="submit" class="btn btn-primary" value="Sign up">
             </form>
           </div> -->
-          </div>
-        </div>
-      </section>
-      <!-- End Hero Section -->
+					</div>
+				</div>
+			</section>
+			<!-- End Hero Section -->
 
-      <!-- Clients Section - Home Page -->
-      <section id="clients" class="clients">
-        <div class="container-fluid" data-aos="fade-up">
-          <div class="row gy-4">
-            <div class="col-xl-2 col-md-3 col-6 client-logo">
-              <img
-                src="assets/img/clients/client-5.png"
-                class="img-fluid"
-                alt=""
-              />
-            </div>
-            <div class="col-xl-2 col-md-3 col-6 client-logo">
-              <img
-                src="assets/img/clients/client-1.png"
-                class="img-fluid"
-                alt=""
-              />
-            </div>
-            <!-- End Client Item -->
+			<!-- Clients Section - Home Page -->
+			<section id="clients" class="clients">
+				<div class="container-fluid" data-aos="fade-up">
+					<div class="row gy-4">
+						<div class="col-xl-2 col-md-3 col-6 client-logo">
+							<img src="assets/img/clients/client-5.png" class="img-fluid" alt="" />
+						</div>
+						<div class="col-xl-2 col-md-3 col-6 client-logo">
+							<img src="assets/img/clients/client-1.png" class="img-fluid" alt="" />
+						</div>
+						<!-- End Client Item -->
 
-            <div class="col-xl-2 col-md-3 col-6 client-logo">
-              <img
-                src="assets/img/clients/client-2.png"
-                class="img-fluid"
-                alt=""
-              />
-            </div>
-            <!-- End Client Item -->
+						<div class="col-xl-2 col-md-3 col-6 client-logo">
+							<img src="assets/img/clients/client-2.png" class="img-fluid" alt="" />
+						</div>
+						<!-- End Client Item -->
 
-            <div class="col-xl-2 col-md-3 col-6 client-logo">
-              <img
-                src="assets/img/clients/client-3.png"
-                class="img-fluid"
-                alt=""
-              />
-            </div>
-            <!-- End Client Item -->
+						<div class="col-xl-2 col-md-3 col-6 client-logo">
+							<img src="assets/img/clients/client-3.png" class="img-fluid" alt="" />
+						</div>
+						<!-- End Client Item -->
 
-            <div class="col-xl-2 col-md-3 col-6 client-logo">
-              <img
-                src="assets/img/clients/client-4.png"
-                class="img-fluid"
-                alt=""
-              />
-            </div>
-            <!-- End Client Item -->
+						<div class="col-xl-2 col-md-3 col-6 client-logo">
+							<img src="assets/img/clients/client-4.png" class="img-fluid" alt="" />
+						</div>
+						<!-- End Client Item -->
 
-            <!-- End Client Item -->
-            <div class="col-xl-2 col-md-3 col-6 client-logo">
-              <img
-                src="assets/img/clients/client-6.png"
-                class="img-fluid"
-                alt=""
-              />
-            </div>
-            <!-- End Client Item -->
-          </div>
-        </div>
-      </section>
-      <!-- End Clients Section -->
+						<!-- End Client Item -->
+						<div class="col-xl-2 col-md-3 col-6 client-logo">
+							<img src="assets/img/clients/client-6.png" class="img-fluid" alt="" />
+						</div>
+						<!-- End Client Item -->
+					</div>
+				</div>
+			</section>
+			<!-- End Clients Section -->
 
-      <!-- ★ 팀 소개 페이지 -->
-      <section id="team" class="team">
-        <!--  Section Title -->
-        <div class="container section-title" data-aos="fade-up">
-          <h2>삼오일 팀 소개</h2>
-          <p>우리는 삼삼오오 모여서 작업한 삼오일입니다.</p>
-        </div>
-        <!-- End Section Title -->
+			<!-- ★ 팀 소개 페이지 -->
+			<section id="team" class="team">
+				<!--  Section Title -->
+				<div class="container section-title" data-aos="fade-up">
+					<h2>삼오일 팀 소개</h2>
+					<p>우리는 삼삼오오 모여서 작업한 삼오일입니다.</p>
+				</div>
+				<!-- End Section Title -->
 
-        <div class="container">
-          <div class="row gy-5">
-            <div
-              class="col-lg-4 col-md-6 member"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <div class="member-img">
-                <img
-                  src="assets/img/team/team-4.png"
-                  class="img-fluid"
-                  alt=""
-                />
-                <div class="social">
-                  <a href="">
-                    <img class="kakaoIcon" src="img/kakaoIcon.png" alt="" />
-                  </a>
-                  <!-- <a href="#"><i class="bi bi-facebook"></i></a>
-                  <a href="#"><i class="bi bi-instagram"></i></a>
-                  <a href="#"><i class="bi bi-linkedin"></i></a> -->
-                </div>
-              </div>
-              <div class="member-info text-center">
-                <h4>김동진</h4>
-                <!-- <span>각자 소개 내용 입력하세요.</span> -->
-                <p>
-                  시간이 얼마나 있는지는 상관없어.<br />어떻게 쓰느냐가
-                  중요하지.
-                </p>
-              </div>
-            </div>
-            <!-- End Team Member -->
+				<div class="container">
+					<div class="row gy-5">
+						<div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="100">
+							<div class="member-img">
+								<img src="assets/img/team/team-4.png" class="img-fluid" alt="" />
+								<div class="social">
+									<a target="_blank" href="https://github.com/cronowiz">
+										<i class="fa-brands fa-github"></i>
+									</a>
+								</div>
+							</div>
+							<div class="member-info text-center">
+								<h4>김동진</h4>
+								<!-- <span>각자 소개 내용 입력하세요.</span> -->
+								<p>시간이 얼마나 있는지는 상관없어.<br />어떻게 쓰느냐가 중요하지.</p>
+							</div>
+						</div>
+						<!-- End Team Member -->
 
-            <div
-              class="col-lg-4 col-md-6 member"
-              data-aos="fade-up"
-              data-aos-delay="200"
-            >
-              <div class="member-img">
-                <img
-                  src="assets/img/team/team-2.png"
-                  class="img-fluid"
-                  alt=""
-                />
-                <div class="social">
-                  <a href="">
-                    <img class="kakaoIcon" src="img/Instagram_logo_2016.svg.webp" alt="" />
-                  </a>
-                </div>
-              </div>
-              <div class="member-info text-center">
-                <h4>조태호</h4>
-                <!-- <span>각자 소개 내용 입력하세요.</span> -->
-                <p>웹개발 꿈나무를 꿈꾸는 고목</p>
-              </div>
-            </div>
-            <!-- End Team Member -->
+						<div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="200">
+							<div class="member-img">
+								<img src="assets/img/team/team-2.png" class="img-fluid" alt="" />
+								<div class="social">
+									<a target="_blank" href="https://www.instagram.com/distinctao/">
+										<img class="kakaoIcon" src="img/Instagram_logo_2016.svg.webp" alt="" />
+									</a>
+								</div>
+							</div>
+							<div class="member-info text-center">
+								<h4>조태호</h4>
+								<!-- <span>각자 소개 내용 입력하세요.</span> -->
+								<p>웹개발 꿈나무를 꿈꾸는 고목</p>
+							</div>
+						</div>
+						<!-- End Team Member -->
 
-            <div
-              class="col-lg-4 col-md-6 member"
-              data-aos="fade-up"
-              data-aos-delay="300"
-            >
-              <div class="member-img">
-                <img
-                  src="assets/img/team/team-3.png"
-                  class="img-fluid"
-                  alt=""
-                />
-                <div class="social">
-                  <a href="">
-                    <img class="kakaoIcon" src="img/kakaoIcon.png" alt="" />
-                  </a>
-                </div>
-              </div>
-              <div class="member-info text-center">
-                <h4>이주영</h4>
-                <!-- <span>각자 소개 내용 입력하세요.</span> -->
-                <p>96년생. 남자.</p>
-              </div>
-            </div>
-            <!-- End Team Member -->
+						<div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="300">
+							<div class="member-img">
+								<img src="assets/img/team/team-3.png" class="img-fluid" alt="" />
+								<div class="social">
+									<a target="_blank" href="https://github.com/Harang96">
+										<!-- <img class="kakaoIcon" src="img/kakaoIcon.png" alt="" /> -->
+										<i class="fa-brands fa-github"></i>
+									</a>
+								</div>
+							</div>
+							<div class="member-info text-center">
+								<h4>이주영</h4>
+								<!-- <span>각자 소개 내용 입력하세요.</span> -->
+								<p>96년생. 남자.</p>
+							</div>
+						</div>
+						<!-- End Team Member -->
 
-            <div
-              class="col-lg-4 col-md-6 member"
-              data-aos="fade-up"
-              data-aos-delay="400"
-            >
-              <div class="member-img">
-                <img
-                  src="assets/img/team/team-1.png"
-                  class="img-fluid"
-                  alt=""
-                />
-                <div class="social">
-                  <a href="">
-                    <img class="kakaoIcon" src="img/kakaoIcon.png" alt="" />
-                  </a>
-                </div>
-              </div>
-              <div class="member-info text-center">
-                <h4>이상용</h4>
-                <!-- <span></span> -->
-                <p>
-                  FC온라인에서 제공하는 API를 이용한 <br />
-                  선수 검색 및 유저 경기 결과 조회 기능을 구현
-                </p>
-              </div>
-            </div>
-            <!-- End Team Member -->
+						<div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="400">
+							<div class="member-img">
+								<img src="assets/img/team/team-1.png" class="img-fluid" alt="" />
+								<div class="social">
+									<a
+										target="_blank"
+										href="https://instagram.com/ssangyong.2?utm_source=qrssangyong.2">
+										<img class="kakaoIcon" src="img/Instagram_logo_2016.svg.webp" alt="" />
+									</a>
+								</div>
+							</div>
+							<div class="member-info text-center">
+								<h4>이상용</h4>
+								<!-- <span></span> -->
+								<p>
+									FC온라인에서 제공하는 API를 이용한 <br />
+									선수 검색 및 유저 경기 결과 조회 기능을 구현
+								</p>
+							</div>
+						</div>
+						<!-- End Team Member -->
 
-            <div
-              class="col-lg-4 col-md-6 member"
-              data-aos="fade-up"
-              data-aos-delay="600"
-            >
-              <div class="member-img">
-                <img
-                  src="assets/img/team/team-5.png"
-                  class="img-fluid"
-                  alt=""
-                />
-                <div class="social">
-                  <a href="">
-                    <img class="kakaoIcon" src="img/kakaoIcon.png" alt="" />
-                  </a>
-                </div>
-              </div>
-              <div class="member-info text-center">
-                <h4>김연지</h4>
-                <!-- <span>각자 소개 내용 입력하세요.</span> -->
-                <p>자기소개</p>
-              </div>
-            </div>
-            <!-- End Team Member -->
-          </div>
-        </div>
-      </section>
-      <!-- ★ 팀 소개 페이지 end -->
+						<div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="600">
+							<div class="member-img">
+								<img src="assets/img/team/team-5.png" class="img-fluid" alt="" />
+								<div class="social">
+									<a target="_blank" href="https://github.com/calliyeonji">
+										<i class="fa-brands fa-github"></i>
+									</a>
+								</div>
+							</div>
+							<div class="member-info text-center">
+								<h4>김연지</h4>
+								<!-- <span>각자 소개 내용 입력하세요.</span> -->
+								<p>
+									일단 하고 본다 !!<br />
+									도전 하고자 하는 의지와 정신이 강합니다.
+								</p>
+							</div>
+						</div>
+						<!-- End Team Member -->
+					</div>
+				</div>
+			</section>
+			<!-- ★ 팀 소개 페이지 end -->
 
-      <!-- Recent-posts Section - Home Page -->
-      <section id="recent-posts" class="recent-posts">
-        <!--  Section Title -->
-        <div class="container section-title" data-aos="fade-up">
-          <h2>취미</h2>
-          <p>추천하는 취미 생활</p>
-        </div>
-        <!-- End Section Title -->
+			<!-- Recent-posts Section - Home Page -->
+			<section id="recent-posts" class="recent-posts">
+				<!--  Section Title -->
+				<div class="container section-title" data-aos="fade-up">
+					<h2>취미</h2>
+					<p>추천하는 취미 생활</p>
+				</div>
+				<!-- End Section Title -->
 
-        <div class="container">
-          <div class="row gy-4">
-            <div
-              class="col-xl-4 col-md-6"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <article>
-                <div class="post-img">
-                  <img
-                    src="assets/img/blog/blog-1.jpg"
-                    alt=""
-                    class="img-fluid"
-                  />
-                </div>
+				<div class="container">
+					<div class="row gy-4">
+						<div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+							<article>
+								<div class="post-img">
+									<img src="assets/img/blog/blog-1.jpg" alt="" class="img-fluid" />
+								</div>
 
-                <p class="post-category">SY FC</p>
+								<p class="post-category">SY FC</p>
 
-                <h2 class="title">
-                  <a href="http://goott351.cafe24.com/lsy/nexon.html"
-                    >FC온라인 선수검색 및 경기결과 확인</a
-                  >
-                </h2>
+								<h2 class="title">
+									<a href="http://goott351.cafe24.com/lsy/nexon.html"
+										>FC온라인 선수검색 및 경기결과 확인</a
+									>
+								</h2>
 
-                <div class="d-flex align-items-center">
-                  <img
-                    src="assets/img/blog/blog-author.png"
-                    alt=""
-                    class="img-fluid post-author-img flex-shrink-0"
-                  />
-                  <div class="post-meta">
-                    <p class="post-author">상용</p>
-                    <p class="post-date">
-                      <!-- <time datetime="2022-01-01">Jan 1, 2022</time> -->
-                    </p>
-                  </div>
-                </div>
-              </article>
-            </div>
-            <!-- End post list item -->
+								<div class="d-flex align-items-center">
+									<img
+										src="assets/img/blog/blog-author.png"
+										alt=""
+										class="img-fluid post-author-img flex-shrink-0" />
+									<div class="post-meta">
+										<p class="post-author">이상용</p>
+										<p class="post-date">
+											<!-- <time datetime="2022-01-01">Jan 1, 2022</time> -->
+										</p>
+									</div>
+								</div>
+							</article>
+						</div>
+						<!-- End post list item -->
 
-            <div
-              class="col-xl-4 col-md-6"
-              data-aos="fade-up"
-              data-aos-delay="200"
-            >
-              <article>
-                <div class="post-img">
-                  <img
-                    src="assets/img/blog/blog-2.jpg"
-                    alt=""
-                    class="img-fluid"
-                  />
-                </div>
+						<div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+							<article>
+								<div class="post-img">
+									<img src="assets/img/blog/blog-2.jpg" alt="" class="img-fluid" />
+								</div>
 
-                <p class="post-category">도서</p>
+								<p class="post-category">도서</p>
 
-                <h2 class="title">
-                  <a href="http://goott351.cafe24.com/cho/book.html"
-                    >책 읽어볼래?</a
-                  >
-                </h2>
+								<h2 class="title">
+									<a href="http://goott351.cafe24.com/cho/book.html">책 읽어볼래?</a>
+								</h2>
 
-                <div class="d-flex align-items-center">
-                  <img
-                    src="assets/img/blog/blog-author-2.png"
-                    alt=""
-                    class="img-fluid post-author-img flex-shrink-0"
-                  />
-                  <div class="post-meta">
-                    <p class="post-author">태호</p>
-                    <p class="post-date">
-                      <!-- <time datetime="2022-01-01">Jun 5, 2022</time> -->
-                    </p>
-                  </div>
-                </div>
-              </article>
-            </div>
-            <!-- End post list item -->
+								<div class="d-flex align-items-center">
+									<img
+										src="assets/img/blog/blog-author-2.png"
+										alt=""
+										class="img-fluid post-author-img flex-shrink-0" />
+									<div class="post-meta">
+										<p class="post-author">조태호</p>
+										<p class="post-date">
+											<!-- <time datetime="2022-01-01">Jun 5, 2022</time> -->
+										</p>
+									</div>
+								</div>
+							</article>
+						</div>
+						<!-- End post list item -->
 
-            <div
-              class="col-xl-4 col-md-6"
-              data-aos="fade-up"
-              data-aos-delay="200"
-            >
-              <article>
-                <div class="post-img">
-                  <img src="assets/img/blog/ljy.png" alt="" class="img-fluid" />
-                </div>
+						<div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+							<article>
+								<div class="post-img">
+									<img src="assets/img/blog/blog-3.jpg" alt="" class="img-fluid" />
+								</div>
 
-                <p class="post-category">관광지</p>
+								<p class="post-category">관광지</p>
 
-                <h2 class="title">
-                  <a href="http://goott351.cafe24.com/ljy/listIndex.html"
-                    >여행 관광지 여기 어때?</a
-                  >
-                </h2>
+								<h2 class="title">
+									<a href="http://goott351.cafe24.com/ljy/listIndex.html">여행 관광지 여기 어때?</a>
+								</h2>
 
-                <div class="d-flex align-items-center">
-                  <img
-                    src="assets/img/blog/blog-author-3.png"
-                    alt=""
-                    class="img-fluid post-author-img flex-shrink-0"
-                  />
-                  <div class="post-meta">
-                    <p class="post-author">이주영</p>
-                    <p class="post-date">
-                      <!-- <time datetime="2022-01-01">Jun 5, 2022</time> -->
-                    </p>
-                  </div>
-                </div>
-              </article>
-            </div>
-            <!-- End post list item -->
+								<div class="d-flex align-items-center">
+									<img
+										src="assets/img/blog/blog-author-3.png"
+										alt=""
+										class="img-fluid post-author-img flex-shrink-0" />
+									<div class="post-meta">
+										<p class="post-author">이주영</p>
+										<p class="post-date">
+											<!-- <time datetime="2022-01-01">Jun 5, 2022</time> -->
+										</p>
+									</div>
+								</div>
+							</article>
+						</div>
+						<!-- End post list item -->
 
-            <div
-              class="col-xl-4 col-md-6"
-              data-aos="fade-up"
-              data-aos-delay="200"
-            >
-              <article>
-                <div class="post-img">
-                  <img
-                    src="assets/img/blog/blog-2.jpg"
-                    alt=""
-                    class="img-fluid"
-                  />
-                </div>
+						<div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+							<article>
+								<div class="post-img">
+									<img src="assets/img/blog/blog-4.jpg" alt="" class="img-fluid" />
+								</div>
 
-                <p class="post-category">문화 행사 정보</p>
+								<p class="post-category">문화 행사 정보</p>
 
-                <h2 class="title">
-                  <a href="http://goott351.cafe24.com/kdj/miniP_listP.html"
-                    >문화생활도 좀 해줘야지~</a
-                  >
-                </h2>
+								<h2 class="title">
+									<a href="http://goott351.cafe24.com/kdj/miniP_listP.html"
+										>문화생활도 좀 해줘야지~</a
+									>
+								</h2>
 
-                <div class="d-flex align-items-center">
-                  <img
-                    src="assets/img/blog/blog-author-4.png"
-                    alt=""
-                    class="img-fluid post-author-img flex-shrink-0"
-                  />
-                  <div class="post-meta">
-                    <p class="post-author">동진</p>
-                    <p class="post-date">
-                      <!-- <time datetime="2022-01-01">Jun 5, 2022</time> -->
-                    </p>
-                  </div>
-                </div>
-              </article>
-            </div>
-            <!-- End post list item -->
+								<div class="d-flex align-items-center">
+									<img
+										src="assets/img/blog/blog-4.png"
+										alt=""
+										class="img-fluid post-author-img flex-shrink-0" />
+									<div class="post-meta">
+										<p class="post-author">김동진</p>
+										<p class="post-date">
+											<!-- <time datetime="2022-01-01">Jun 5, 2022</time> -->
+										</p>
+									</div>
+								</div>
+							</article>
+						</div>
+						<!-- End post list item -->
 
-            <div
-              class="col-xl-4 col-md-6"
-              data-aos="fade-up"
-              data-aos-delay="200"
-            >
-              <article>
-                <div class="post-img">
-                  <img
-                    src="assets/img/blog/blog-2.jpg"
-                    alt=""
-                    class="img-fluid"
-                  />
-                </div>
+						<div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+							<article>
+								<div class="post-img">
+									<img src="assets/img/blog/blog-5.jpg" alt="" class="img-fluid" />
+								</div>
 
-                <p class="post-category">문화공간 정보</p>
+								<p class="post-category">문화공간 정보</p>
 
-                <h2 class="title">
-                  <a href="http://goott351.cafe24.com/kyj/list.html"
-                    >연지페이지 / 링크 미연결</a
-                  >
-                </h2>
+								<h2 class="title">
+									<a href="http://goott351.cafe24.com/kyj/list.html">서울시 문화공간 정보</a>
+								</h2>
 
-                <div class="d-flex align-items-center">
-                  <img
-                    src="assets/img/blog/blog-author-5.png"
-                    alt=""
-                    class="img-fluid post-author-img flex-shrink-0"
-                  />
-                  <div class="post-meta">
-                    <p class="post-author">연지</p>
-                    <p class="post-date">
-                      <!-- <time datetime="2022-01-01">Jun 5, 2022</time> -->
-                    </p>
-                  </div>
-                </div>
-              </article>
-            </div>
-            <!-- End post list item -->
-            <div
-              class="col-xl-4 col-md-6"
-              data-aos="fade-up"
-              data-aos-delay="300"
-            >
-              <article style="text-align: center">
-                <div style="overflow: unset" class="post-img">
-                  <img
-                    style="margin-top: 40px; margin-top: 60px; width: 70%"
-                    src="assets/img/clients/client-5.png"
-                    alt=""
-                    class="img-fluid"
-                  />
-                </div>
-              </article>
-            </div>
-            <!-- End post list item -->
-          </div>
-          <!-- End recent posts list -->
-        </div>
-      </section>
-      <!-- End Recent-posts Section -->
+								<div class="d-flex align-items-center">
+									<img
+										src="assets/img/blog/blog-author-5.png"
+										alt=""
+										class="img-fluid post-author-img flex-shrink-0" />
+									<div class="post-meta">
+										<p class="post-author">김연지</p>
+										<p class="post-date">
+											<!-- <time datetime="2022-01-01">Jun 5, 2022</time> -->
+										</p>
+									</div>
+								</div>
+							</article>
+						</div>
+						<!-- End post list item -->
+						<div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+							<article style="text-align: center">
+								<div style="overflow: unset" class="post-img">
+									<img
+										style="margin-top: 40px; margin-top: 60px; width: 70%"
+										src="assets/img/clients/client-5.png"
+										alt=""
+										class="img-fluid" />
+								</div>
+							</article>
+						</div>
+						<!-- End post list item -->
+					</div>
+					<!-- End recent posts list -->
+				</div>
+			</section>
+			<!-- End Recent-posts Section -->
 
-      <!-- Testimonials Section - Home Page -->
-      <section id="testimonials" class="testimonials">
-        <div class="container">
-          <div class="row align-items-center">
-            <div class="col-lg-5 info" data-aos="fade-up" data-aos-delay="100">
-              <h3>프로젝트를 하면서 느낀점</h3>
-              <p>첫 미니 프로젝트를 하면서 느낀점입니다.</p>
-            </div>
+			<!-- Testimonials Section - Home Page -->
+			<section id="testimonials" class="testimonials">
+				<div class="container">
+					<div class="row align-items-center">
+						<div class="col-lg-5 info" data-aos="fade-up" data-aos-delay="100">
+							<h3>프로젝트를 하면서 느낀점</h3>
+							<p>첫 미니 프로젝트를 하면서 느낀점입니다.</p>
+						</div>
 
-            <div class="col-lg-7" data-aos="fade-up" data-aos-delay="200">
-              <div class="swiper">
-                <template class="swiper-config">
-                  { "loop": true, "speed" : 600, "autoplay": { "delay": 5000 },
-                  "slidesPerView": "auto", "pagination": { "el":
-                  ".swiper-pagination", "type": "bullets", "clickable": true } }
-                </template>
-                <div class="swiper-wrapper">
-                  <div class="swiper-slide">
-                    <div class="testimonial-item">
-                      <div class="d-flex">
-                        <img
-                          src="assets/img/testimonials/testimonials-1.png"
-                          class="testimonial-img flex-shrink-0"
-                          alt=""
-                        />
-                        <div>
-                          <h3 style="line-height: 90px; margin: 0">이상용</h3>
-                          <!-- <h4>입력할 내용을 작성하세요.</h4> -->
-                          <!-- <div class="stars">
+						<div class="col-lg-7" data-aos="fade-up" data-aos-delay="200">
+							<div class="swiper">
+								<template class="swiper-config">
+									{ "loop": true, "speed" : 600, "autoplay": { "delay": 5000 }, "slidesPerView":
+									"auto", "pagination": { "el": ".swiper-pagination", "type": "bullets",
+									"clickable": true } }
+								</template>
+								<div class="swiper-wrapper">
+									<div class="swiper-slide">
+										<div class="testimonial-item">
+											<div class="d-flex">
+												<img
+													src="assets/img/testimonials/testimonials-1.png"
+													class="testimonial-img flex-shrink-0"
+													alt="" />
+												<div>
+													<h3 style="line-height: 90px; margin: 0">이상용</h3>
+													<!-- <h4>입력할 내용을 작성하세요.</h4> -->
+													<!-- <div class="stars">
                             <i class="bi bi-star-fill"></i
                             ><i class="bi bi-star-fill"></i
                             ><i class="bi bi-star-fill"></i
                             ><i class="bi bi-star-fill"></i
                             ><i class="bi bi-star-fill"></i>
                           </div> -->
-                        </div>
-                      </div>
-                      <p>
-                        <i class="bi bi-quote quote-icon-left"></i>
-                        <span
-                          >배운 내용을 이용하여 실제 접속과 이용 가능한 페이지를
-                          만든 것이 신기했으며 오류를 찾고 해결하는 과정을 통해
-                          실력이 늘어가는 것을 느꼈습니다. 여러 프로젝트를 통해
-                          더 완성도 있는 실용적인 페이지를 만들어보고 싶습니다.
-                        </span>
-                        <i class="bi bi-quote quote-icon-right"></i>
-                      </p>
-                    </div>
-                  </div>
-                  <!-- End testimonial item -->
+												</div>
+											</div>
+											<p>
+												<i class="bi bi-quote quote-icon-left"></i>
+												<span
+													>배운 내용을 이용하여 실제 접속과 이용 가능한 페이지를 만든 것이
+													신기했으며 오류를 찾고 해결하는 과정을 통해 실력이 늘어가는 것을
+													느꼈습니다. 여러 프로젝트를 통해 더 완성도 있는 실용적인 페이지를
+													만들어보고 싶습니다.
+												</span>
+												<i class="bi bi-quote quote-icon-right"></i>
+											</p>
+										</div>
+									</div>
+									<!-- End testimonial item -->
 
-                  <div class="swiper-slide">
-                    <div class="testimonial-item">
-                      <div class="d-flex">
-                        <img
-                          src="assets/img/testimonials/testimonials-2.png"
-                          class="testimonial-img flex-shrink-0"
-                          alt=""
-                        />
-                        <div>
-                          <h3 style="line-height: 90px; margin: 0">조태호</h3>
-                          <!-- <h4>아프지 말자!!!!</h4> -->
-                          <!-- <div class="stars">
+									<div class="swiper-slide">
+										<div class="testimonial-item">
+											<div class="d-flex">
+												<img
+													src="assets/img/testimonials/testimonials-2.png"
+													class="testimonial-img flex-shrink-0"
+													alt="" />
+												<div>
+													<h3 style="line-height: 90px; margin: 0">조태호</h3>
+													<!-- <h4>아프지 말자!!!!</h4> -->
+													<!-- <div class="stars">
                             <i class="bi bi-star-fill"></i
                             ><i class="bi bi-star-fill"></i
                             ><i class="bi bi-star-fill"></i
                             ><i class="bi bi-star-fill"></i
                             ><i class="bi bi-star-fill"></i>
                           </div> -->
-                        </div>
-                      </div>
-                      <p>
-                        <i class="bi bi-quote quote-icon-left"></i>
-                        <span>
-                          처음 해보는 개발 프로젝트... 짧으면 짧고 길면 길다
-                          느낄 수 있었던 시간이었다. 안되던 것이 하나씩 풀려가는
-                          모습을 보면서 매우 뿌듯하면서도 불안하기도 했다. 모두
-                          고생 많았어요!! 이제 진짜 고생 시작이니까 ㅎㅎ
-                        </span>
-                        <i class="bi bi-quote quote-icon-right"></i>
-                      </p>
-                    </div>
-                  </div>
-                  <!-- End testimonial item -->
+												</div>
+											</div>
+											<p>
+												<i class="bi bi-quote quote-icon-left"></i>
+												<span>
+													처음 해보는 개발 프로젝트... 짧으면 짧고 길면 길다 느낄 수 있었던
+													시간이었다. 안되던 것이 하나씩 풀려가는 모습을 보면서 매우 뿌듯하면서도
+													불안하기도 했다. 모두 고생 많았어요!! 이제 진짜 고생 시작이니까 ㅎㅎ
+												</span>
+												<i class="bi bi-quote quote-icon-right"></i>
+											</p>
+										</div>
+									</div>
+									<!-- End testimonial item -->
 
-                  <div class="swiper-slide">
-                    <div class="testimonial-item">
-                      <div class="d-flex">
-                        <img
-                          src="assets/img/testimonials/testimonials-3.png"
-                          class="testimonial-img flex-shrink-0"
-                          alt=""
-                        />
-                        <div>
-                          <h3 style="line-height: 90px; margin: 0">이주영</h3>
-                          <!-- <h4>입력할 내용을 작성하세요.</h4> -->
-                          <!-- <div class="stars">
+									<div class="swiper-slide">
+										<div class="testimonial-item">
+											<div class="d-flex">
+												<img
+													src="assets/img/testimonials/testimonials-3.png"
+													class="testimonial-img flex-shrink-0"
+													alt="" />
+												<div>
+													<h3 style="line-height: 90px; margin: 0">이주영</h3>
+													<!-- <h4>입력할 내용을 작성하세요.</h4> -->
+													<!-- <div class="stars">
                             <i class="bi bi-star-fill"></i
                             ><i class="bi bi-star-fill"></i
                             ><i class="bi bi-star-fill"></i
                             ><i class="bi bi-star-fill"></i
                             ><i class="bi bi-star-fill"></i>
                           </div> -->
-                        </div>
-                      </div>
-                      <p>
-                        <i class="bi bi-quote quote-icon-left"></i>
-                        <span
-                          >프로젝트를 시작할 땐 막막하기만 했지만, 다 같이
-                          방향성을 잡아가고 하나하나 진행됨에 따라 뿌듯함을
-                          느꼈습니다. 구상한 부분을 하나하나 구현하고 서버에
-                          올려 페이지를 연동하는 과정에서 많은 오류가 생겼고,
-                          그것을 해결하는 과정에서 많은 것을 배웠습니다.</span
-                        >
-                        <i class="bi bi-quote quote-icon-right"></i>
-                      </p>
-                    </div>
-                  </div>
-                  <!-- End testimonial item -->
+												</div>
+											</div>
+											<p>
+												<i class="bi bi-quote quote-icon-left"></i>
+												<span
+													>프로젝트를 시작할 땐 막막하기만 했지만, 다 같이 방향성을 잡아가고
+													하나하나 진행됨에 따라 뿌듯함을 느꼈습니다. 구상한 부분을 하나하나
+													구현하고 서버에 올려 페이지를 연동하는 과정에서 많은 오류가 생겼고, 그것을
+													해결하는 과정에서 많은 것을 배웠습니다.</span
+												>
+												<i class="bi bi-quote quote-icon-right"></i>
+											</p>
+										</div>
+									</div>
+									<!-- End testimonial item -->
 
-                  <div class="swiper-slide">
-                    <div class="testimonial-item">
-                      <div class="d-flex">
-                        <img
-                          src="assets/img/testimonials/testimonials-4.png"
-                          class="testimonial-img flex-shrink-0"
-                          alt=""
-                        />
-                        <div>
-                          <h3 style="line-height: 90px; margin: 0">김동진</h3>
-                          <!-- <h4>입력할 내용을 작성하세요.</h4> -->
-                          <!-- <div class="stars">
+									<div class="swiper-slide">
+										<div class="testimonial-item">
+											<div class="d-flex">
+												<img
+													src="assets/img/testimonials/testimonials-4.png"
+													class="testimonial-img flex-shrink-0"
+													alt="" />
+												<div>
+													<h3 style="line-height: 90px; margin: 0">김동진</h3>
+													<!-- <h4>입력할 내용을 작성하세요.</h4> -->
+													<!-- <div class="stars">
                             <i class="bi bi-star-fill"></i
                             ><i class="bi bi-star-fill"></i
                             ><i class="bi bi-star-fill"></i
                             ><i class="bi bi-star-fill"></i
                             ><i class="bi bi-star-fill"></i>
                           </div> -->
-                        </div>
-                      </div>
-                      <p>
-                        <i class="bi bi-quote quote-icon-left"></i>
-                        <span
-                          >처음엔 막막했지만 많은걸 배우게된 시간이었습니다.
-                          모두 고생하셨습니다!</span
-                        >
-                        <i class="bi bi-quote quote-icon-right"></i>
-                      </p>
-                    </div>
-                  </div>
-                  <!-- End testimonial item -->
+												</div>
+											</div>
+											<p>
+												<i class="bi bi-quote quote-icon-left"></i>
+												<span
+													>처음엔 막막했지만 많은걸 배우게된 시간이었습니다. 모두
+													고생하셨습니다!</span
+												>
+												<i class="bi bi-quote quote-icon-right"></i>
+											</p>
+										</div>
+									</div>
+									<!-- End testimonial item -->
 
-                  <div class="swiper-slide">
-                    <div class="testimonial-item">
-                      <div class="d-flex">
-                        <img
-                          src="assets/img/testimonials/testimonials-5.png"
-                          class="testimonial-img flex-shrink-0"
-                          alt=""
-                        />
-                        <div>
-                          <h3 style="line-height: 90px; margin: 0">김연지</h3>
-                          <!-- <h4>입력할 내용을 작성하세요.</h4> -->
-                          <!-- <div class="stars">
+									<div class="swiper-slide">
+										<div class="testimonial-item">
+											<div class="d-flex">
+												<img
+													src="assets/img/testimonials/testimonials-5.png"
+													class="testimonial-img flex-shrink-0"
+													alt="" />
+												<div>
+													<h3 style="line-height: 90px; margin: 0">김연지</h3>
+													<!-- <h4>입력할 내용을 작성하세요.</h4> -->
+													<!-- <div class="stars">
                             <i class="bi bi-star-fill"></i
                             ><i class="bi bi-star-fill"></i
                             ><i class="bi bi-star-fill"></i
                             ><i class="bi bi-star-fill"></i
                             ><i class="bi bi-star-fill"></i>
                           </div> -->
-                        </div>
-                      </div>
-                      <p>
-                        <i class="bi bi-quote quote-icon-left"></i>
-                        <span>소감을 입력하세요.</span>
-                        <i class="bi bi-quote quote-icon-right"></i>
-                      </p>
-                    </div>
-                  </div>
-                  <!-- End testimonial item -->
-                </div>
-                <div class="swiper-pagination"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- End Testimonials Section -->
+												</div>
+											</div>
+											<p>
+												<i class="bi bi-quote quote-icon-left"></i>
+												<span
+													>첫 미니 프로젝트를 하면서 팀과 협업하고, 소통하는 방법을 배우게 되었고,
+													알게 되어 의미 있는 시간이었습니다. 혼자라면 막막했을 텐데 팀과 함께라서
+													의지하고, 협심하며 난관도 헤쳐 나갈 수 있었습니다. 그동안 고생 많이 한
+													팀장 상용이, 에이스 주영이, 열정 태호님, 노력파 동진님까지 정말 고맙고,
+													모두 수고 많으셨습니다!</span
+												>
+												<i class="bi bi-quote quote-icon-right"></i>
+											</p>
+										</div>
+									</div>
+									<!-- End testimonial item -->
+								</div>
+								<div class="swiper-pagination"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- End Testimonials Section -->
 
-      <!-- Contact Section - Home Page -->
-      <section id="contact" class="contact">
-        <!--  Section Title -->
-        <div class="container section-title" data-aos="fade-up">
-          <h2>오시는 길</h2>
-          <p>삼오일팀이 작업한 구트아카데미에 오시는 길입니다.</p>
-        </div>
-        <!-- End Section Title -->
+			<!-- Contact Section - Home Page -->
+			<section id="contact" class="contact">
+				<!--  Section Title -->
+				<div class="container section-title" data-aos="fade-up">
+					<h2>오시는 길</h2>
+					<p>삼오일팀이 작업한 구트아카데미에 오시는 길입니다.</p>
+				</div>
+				<!-- End Section Title -->
 
-        <div class="container" data-aos="fade-up" data-aos-delay="100">
-          <div class="row gy-4">
-            <div class="col-lg-6">
-              <div class="row gy-4">
-                <div class="col-md-6">
-                  <div class="info-item" data-aos="fade" data-aos-delay="200">
-                    <i class="bi bi-geo-alt"></i>
-                    <h3>오시는 길</h3>
-                    <!-- <p>주소</p> -->
-                    <p>
-                      서울특별시 구로구 시흥대로 163길 33, 주호타워 구트아카데미
-                      3층
-                    </p>
-                  </div>
-                </div>
-                <!-- End Info Item -->
+				<div class="container" data-aos="fade-up" data-aos-delay="100">
+					<div class="row gy-4">
+						<div class="col-lg-6">
+							<div class="row gy-4">
+								<div class="col-md-6">
+									<div class="info-item" data-aos="fade" data-aos-delay="200">
+										<i class="bi bi-geo-alt"></i>
+										<h3>오시는 길</h3>
+										<!-- <p>주소</p> -->
+										<p>서울특별시 구로구 시흥대로 163길 33, 주호타워 구트아카데미 3층</p>
+									</div>
+								</div>
+								<!-- End Info Item -->
 
-                <div class="col-md-6">
-                  <div class="info-item" data-aos="fade" data-aos-delay="300">
-                    <i class="bi bi-telephone"></i>
-                    <h3>연락처</h3>
-                    <p><a href="tel:02-837-9922">02-837-9922</a></p>
-                    <!-- <p>주말 & 공휴일 전화 및 접수 가능</p> -->
-                    <p>운영시간 : 09:30 ~ 22:00</p>
-                    <!-- <p>api 불러와서 주소 넣기(가능하면)</p> -->
-                  </div>
-                </div>
-                <!-- End Info Item -->
+								<div class="col-md-6">
+									<div class="info-item" data-aos="fade" data-aos-delay="300">
+										<i class="bi bi-telephone"></i>
+										<h3>연락처</h3>
+										<p><a href="tel:02-837-9922">02-837-9922</a></p>
+										<!-- <p>주말 & 공휴일 전화 및 접수 가능</p> -->
+										<p>운영시간 : 09:30 ~ 22:00</p>
+										<!-- <p>api 불러와서 주소 넣기(가능하면)</p> -->
+									</div>
+								</div>
+								<!-- End Info Item -->
 
-                <div class="col-md-6">
-                  <div class="info-item" data-aos="fade" data-aos-delay="400">
-                    <i class="bi bi-envelope"></i>
-                    <h3>Email Us</h3>
-                    <p>
-                      <a href="mailto:goott8556@gmail.com"
-                        >goott8556@gmail.com</a
-                      >
-                    </p>
-                    <!-- <p>FAX: 02-867-2222</p> -->
-                  </div>
-                </div>
-                <!-- End Info Item -->
+								<div class="col-md-6">
+									<div class="info-item" data-aos="fade" data-aos-delay="400">
+										<i class="bi bi-envelope"></i>
+										<h3>Email Us</h3>
+										<p>
+											<a href="mailto:goott8556@gmail.com">goott8556@gmail.com</a>
+										</p>
+										<!-- <p>FAX: 02-867-2222</p> -->
+									</div>
+								</div>
+								<!-- End Info Item -->
 
-                <div class="col-md-6">
-                  <div class="info-item" data-aos="fade" data-aos-delay="500">
-                    <i class="bi bi-clock"></i>
-                    <h3>프로젝트 작업 기간</h3>
-                    <p>2023. 10.24 ~ 11.07 (2주)</p>
-                    <!-- <p>약 2주 소요</p> -->
-                  </div>
-                </div>
-                <!-- End Info Item -->
-              </div>
-            </div>
+								<div class="col-md-6">
+									<div class="info-item" data-aos="fade" data-aos-delay="500">
+										<i class="bi bi-clock"></i>
+										<h3>프로젝트 작업 기간</h3>
+										<p>2023. 10.24 ~ 11.07 (2주)</p>
+										<!-- <p>약 2주 소요</p> -->
+									</div>
+								</div>
+								<!-- End Info Item -->
+							</div>
+						</div>
 
-            <div class="col-md-6">
-              <div id="map"></div>
-            </div>
-            <!-- End Contact Form -->
-          </div>
-        </div>
-      </section>
-      <!-- End Contact Section -->
-    </main>
+						<div class="col-md-6">
+							<div id="map"></div>
+						</div>
+						<!-- End Contact Form -->
+					</div>
+				</div>
+			</section>
+			<!-- End Contact Section -->
+		</main>
 
-    <!-- ======= Footer ======= -->
-    <footer id="footer" class="footer">
-      <div class="container footer-top">
-        <div class="row gy-4">
-          <div class="col-lg-5 col-md-12 footer-about">
-            <a href="index.html" class="logo d-flex align-items-center">
-              <span>삼오일</span>
-              <!-- <span>.</span> -->
-            </a>
-            <p>© 2023 Mini Project 삼오일 Team.</p>
-            <div class="social-links d-flex mt-4">
-              <a href="javascript:shareMessage()">
-                <img
-                  class="kakaoIcon"
-                  src="http://goott351.cafe24.com/img/kakaoIcon.png"
-                  alt=""
-                />
-              </a>
-            </div>
-          </div>
+		<!-- ======= Footer ======= -->
+		<footer id="footer" class="footer">
+			<div class="container footer-top">
+				<div class="row gy-4">
+					<div class="col-lg-5 col-md-12 footer-about">
+						<a href="index.html" class="logo d-flex align-items-center">
+							<span>삼오일</span>
+							<!-- <span>.</span> -->
+						</a>
+						<p>© 2023 Mini Project 삼오일 Team.</p>
+						<div class="social-links d-flex mt-4">
+							<a href="javascript:shareMessage()">
+								<img class="kakaoIcon" src="http://goott351.cafe24.com/img/kakaoIcon.png" alt="" />
+							</a>
+						</div>
+					</div>
 
-          <div class="col-lg-2 col-6 footer-links">
-            <h4>대표 메뉴</h4>
-            <ul>
-              <li><a href="index.html#hero">홈</a></li>
-              <li><a href="index.html#team">팀 소개</a></li>
-              <li><a href="index.html#recent-posts">취미 모아보기</a></li>
-              <li><a href="index.html#testimonials">느낀점</a></li>
-              <li><a href="index.html#contact">오시는 길</a></li>
-            </ul>
-          </div>
+					<div class="col-lg-2 col-6 footer-links">
+						<h4>대표 메뉴</h4>
+						<ul>
+							<li><a href="index.html#hero">홈</a></li>
+							<li><a href="index.html#team">팀 소개</a></li>
+							<li><a href="index.html#recent-posts">취미 모아보기</a></li>
+							<li><a href="index.html#testimonials">느낀점</a></li>
+							<li><a href="index.html#contact">오시는 길</a></li>
+						</ul>
+					</div>
 
-          <div class="col-lg-2 col-6 footer-links">
-            <h4>삼오일 Team</h4>
-            <ul>
-              <li>
-                <a href="http://goott351.cafe24.com/lsy/nexon.html">이상용</a>
-              </li>
-              <li>
-                <a href="http://goott351.cafe24.com/cho/book.html">조태호</a>
-              </li>
-              <li>
-                <a href="http://goott351.cafe24.com/ljy/listIndex.html"
-                  >이주영</a
-                >
-              </li>
-              <li>
-                <a href="http://goott351.cafe24.com/kdj/miniP_listP.html"
-                  >김동진</a
-                >
-              </li>
-              <li>
-                <a href="http://goott351.cafe24.com/kyj/list.html">김연지</a>
-              </li>
-            </ul>
-          </div>
+					<div class="col-lg-2 col-6 footer-links">
+						<h4>삼오일 Team</h4>
+						<ul>
+							<li>
+								<a href="http://goott351.cafe24.com/lsy/nexon.html">이상용</a>
+							</li>
+							<li>
+								<a href="http://goott351.cafe24.com/cho/book.html">조태호</a>
+							</li>
+							<li>
+								<a href="http://goott351.cafe24.com/ljy/listIndex.html">이주영</a>
+							</li>
+							<li>
+								<a href="http://goott351.cafe24.com/kdj/miniP_listP.html">김동진</a>
+							</li>
+							<li>
+								<a href="http://goott351.cafe24.com/kyj/list.html">김연지</a>
+							</li>
+						</ul>
+					</div>
 
-          <div
-            class="col-lg-3 col-md-12 footer-contact text-center text-md-start"
-          >
-            <h4>문의</h4>
-            <p>구트아카데미</p>
-            <p><a href="https://www.goott.co.kr/"> https://www.goott.co.kr/</a></p>
-            <p>운영시간 : 09:30 ~ 22:00</p>
-            <p class="mt-4">
-              <strong>Tel :</strong>
-              <span><a href="tel:02-837-9922">02-837-9922</a></span>
-            </p>
-            <p>
-              <strong>Email :</strong>
-              <span>
-                <a href="mailto:goott8556@gmail.com">goott8556@gmail.com</a>
-              </span>
-            </p>
-          </div>
-        </div>
-      </div>
+					<div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+						<h4>문의</h4>
+						<p>구트아카데미</p>
+						<p>
+							<a href="https://www.goott.co.kr/"> https://www.goott.co.kr/</a>
+						</p>
+						<p>운영시간 : 09:30 ~ 22:00</p>
+						<p class="mt-4">
+							<strong>Tel :</strong>
+							<span><a href="tel:02-837-9922">02-837-9922</a></span>
+						</p>
+						<p>
+							<strong>Email :</strong>
+							<span>
+								<a href="mailto:goott8556@gmail.com">goott8556@gmail.com</a>
+							</span>
+						</p>
+					</div>
+				</div>
+			</div>
 
-      <div class="container copyright text-center mt-4">
-        <p>
-          &copy; <span>Copyright</span> <strong class="px-1">삼오일</strong>
-          <span>All Rights Reserved</span>
-        </p>
-        <div class="credits">
-          <!-- All the links in the footer should remain intact. -->
-          <!-- You can delete the links only if you've purchased the pro version. -->
-          <!-- Licensing information: https://bootstrapmade.com/license/ -->
-          <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-        </div>
-      </div>
-    </footer>
-    <!-- End Footer -->
+			<div class="container copyright text-center mt-4">
+				<p>
+					&copy; <span>Copyright</span> <strong class="px-1">삼오일</strong>
+					<span>All Rights Reserved</span>
+				</p>
+				<div class="credits">
+					<!-- All the links in the footer should remain intact. -->
+					<!-- You can delete the links only if you've purchased the pro version. -->
+					<!-- Licensing information: https://bootstrapmade.com/license/ -->
+					<!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+					Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+				</div>
+			</div>
+		</footer>
+		<!-- End Footer -->
 
-    <!-- Scroll Top Button -->
-    <a
-      href="#"
-      id="scroll-top"
-      class="scroll-top d-flex align-items-center justify-content-center"
-      ><i class="bi bi-arrow-up-short"></i
-    ></a>
+		<!-- Scroll Top Button -->
+		<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"
+			><i class="bi bi-arrow-up-short"></i
+		></a>
 
-    <!-- Preloader -->
-    <div id="preloader">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
+		<!-- Preloader -->
+		<div id="preloader">
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+		</div>
 
-    <!-- Vendor JS Files -->
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
+		<!-- Vendor JS Files -->
+		<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+		<script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+		<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+		<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+		<script src="assets/vendor/aos/aos.js"></script>
+		<script src="assets/vendor/php-email-form/validate.js"></script>
 
-    <!-- Template Main JS File -->
-    <script src="assets/js/main.js"></script>
-  </body>
+		<!-- Template Main JS File -->
+		<script src="assets/js/main.js"></script>
+	</body>
 </html>
